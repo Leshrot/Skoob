@@ -1,0 +1,10 @@
+LÓGICA:
+- Checar se há campos iguais na tabela do banco (campos únicos são: email, apelido)
+   (Verdadeiro) = Cadastro inválido
+   (Falso) = muda estados para suas siglas respectivas, dá insert e redireciona para a próxima página (ConfCAD)
+
+RELACIONADO AO BANCO:
+- FALTA ADICIONAR CAMPOS DE NOME, SEXO NO BANCO
+- O CADASTRO NÃO PEDE DATA DE NASCIMENTO
+
+- código JS para verificar se senha e senha de confirmação são iguais
