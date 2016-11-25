@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: Nov 21, 2016 as 07:02 PM
+-- Tempo de Geração: Nov 29, 2016 as 01:17 AM
 -- Versão do Servidor: 5.1.41
 -- Versão do PHP: 5.3.1
 
@@ -26,6 +26,8 @@ USE db_skoob;
 --
 -- Estrutura da tabela `tb_autor`
 --
+
+
 
 CREATE TABLE IF NOT EXISTS `tb_autor` (
   `cd_autor` int(11) NOT NULL,
@@ -163,8 +165,6 @@ CREATE TABLE IF NOT EXISTS `tb_editora` (
 -- Estrutura da tabela `tb_leitor`
 --
 
-
-
 CREATE TABLE IF NOT EXISTS `tb_leitor` (
   `cd_leitor` int(11) NOT NULL,
   `nm_leitor` varchar(40) DEFAULT NULL,
@@ -191,12 +191,12 @@ INSERT DELAYED IGNORE INTO `tb_leitor` (`cd_leitor`, `nm_leitor`, `nm_apelido_le
 --
 
 CREATE TABLE IF NOT EXISTS `tb_livro` (
-  `cd_isbn_10_livro` int(11) NOT NULL,
-  `cd_isbn_13_livro` int(11) NOT NULL,
+  `cd_isbn_10_livro` bigint(11) NOT NULL,
+  `cd_isbn_13_livro` bigint(11) NOT NULL,
   `nm_livro` varchar(30) DEFAULT NULL,
   `ic_lancamento` char(1) DEFAULT NULL,
   `dt_lancamento` date DEFAULT NULL,
-  `ds_resumo_livro` varchar(300) DEFAULT NULL,
+  `ds_resumo_livro` varchar(2000) DEFAULT NULL,
   `nr_edicao_livro` int(11) DEFAULT NULL,
   `nr_pagina_livro` int(11) DEFAULT NULL,
   `ds_idioma_livro` varchar(20) DEFAULT NULL,
@@ -204,7 +204,9 @@ CREATE TABLE IF NOT EXISTS `tb_livro` (
   `ds_tamanho_livro` varchar(10) DEFAULT NULL,
   `vl_peso_livro` int(11) DEFAULT NULL,
   `ds_tipo_capa_livro` varchar(20) DEFAULT NULL,
-  `ds_url_capa_livro` varchar(200) DEFAULT NULL,
+  `ds_url_capa_livro` varchar(500) DEFAULT NULL,
+  `ds_url_video_livro` varchar(500) DEFAULT NULL,
+  `ds_video_livro` varchar(500) DEFAULT NULL,
   `tb_loja_cd_loja` int(11) NOT NULL,
   `tb_editora_cd_editora` int(11) NOT NULL,
   PRIMARY KEY (`cd_isbn_10_livro`,`cd_isbn_13_livro`),
@@ -216,6 +218,10 @@ CREATE TABLE IF NOT EXISTS `tb_livro` (
 -- Extraindo dados da tabela `tb_livro`
 --
 
+INSERT DELAYED IGNORE INTO `tb_livro` (`cd_isbn_10_livro`, `cd_isbn_13_livro`, `nm_livro`, `ic_lancamento`, `dt_lancamento`, `ds_resumo_livro`, `nr_edicao_livro`, `nr_pagina_livro`, `ds_idioma_livro`, `ds_idioma_original_livro`, `ds_tamanho_livro`, `vl_peso_livro`, `ds_tipo_capa_livro`, `ds_url_capa_livro`, `ds_url_video_livro`, `ds_video_livro`, `tb_loja_cd_loja`, `tb_editora_cd_editora`) VALUES
+(8551000535, 9788551000533, 'Contos peculiares', '1', '0000-00-00', 'O livro dentro dos livros, Contos peculiares é a coletânea de contos e fábulas citada ao longo da série O lar da srta. Peregrine para crianças peculiares — o livro com as histórias que os jovens peculiares escutam sua protetora contar e recontar.\r\nUm menino que vira gafanhoto e foge com um grupo de gansos; uma princesa com língua de cobra à procura de um príncipe com quem se casar; canibais ricos que comem braços e pernas de peculiares que têm o dom de se regenerar são alguns dos personagens dessas narrativas que há séculos povoam o imaginário dos peculiares, oferecendo não apenas valiosas lições, mas também pistas para informações secretas, como a localização exata de certas fendas temporais, por exemplo. Compilado por Millard Nullings, o menino invisível acolhido no lar da srta. Peregrine, o livro inclui surpreendentes comentários e notas, além de um desfecho alternativo para a tocante história do gigante Cuthbert, já conhecida dos leitores da série.\r\nInusitado, surpreendente e divertido, Contos peculiares é ao mesmo tempo um delicioso complemento e uma porta de entrada para o rico universo criado por Ransom Riggs; um verdadeiro presente para quem não resiste à magia das boas histórias.', NULL, 208, 'português ', NULL, NULL, NULL, NULL, 'https://cache.skoob.com.br/local/images//h41_dW0Y1pPbp_UEW5ZWmzb2Icg=/200x/center/top/smart/filters:format(jpeg)/https://skoob.s3.amazonaws.com/livros/606418/CONTOS_PECULIARES_1472490708606418SK1472490708B.jpg', NULL, NULL, 0, 0),
+(8580415217, 9788580415216, 'O Feiticeiro de Terramar (Cicl', '1', '0000-00-00', 'Há quem diga que o feiticeiro mais poderoso de todos os tempos é um homem chamado Gavião. Este livro narra as aventuras de Ged, o menino que um dia se tornará essa lenda.\r\nAinda pequeno, o pastor órfão de mãe descobriu seus poderes e foi para uma escola de magos. Porém, deslumbrado com tudo o que a magia podia lhe proporcionar, Ged foi logo dominado pelo orgulho e a impaciência e, sem querer, libertou um grande mal, um monstro assustador que o levou a uma cruzada mortal pelos mares solitários.\r\nPublicado originalmente em 1968, O feiticeiro de Terramar se tornou um clássico da literatura de fantasia. Ged é um predecessor em magia e rebeldia de Harry Potter. E Ursula K. Le Guin é uma referência para escritores do gênero como Patrick Rothfuss, Joe Abercrombie e Neil Gaiman.', NULL, 176, 'português', NULL, NULL, NULL, NULL, 'https://cache.skoob.com.br/local/images//6IR6lf5WewSCtM-BRIK-AqfphXw=/200x/center/top/smart/filters:format(jpeg)/https://skoob.s3.amazonaws.com/livros/571388/O_FEITICEIRO_DE_TERRAMAR_1470088093571388SK1470088093B.jpg', NULL, NULL, 0, 0),
+(8581637558, 9788581637556, 'Poke?mon Go: De treinador a me', '1', '0000-00-00', 'Os Pokémon invadiram o mundo que conhecemos! O sonho nutrido por fãs há 20 anos finalmente se tornou realidade. Agora é possível encontrar os monstrinhos de bolso em todos os lugares: na vizinhança, na escola, no trabalho e até no sofá de casa. Tudo isso graças ao aplicativo que causou uma nova febre mundial: Pokémon GO.\n\nEste guia o auxiliará com diversas dicas de desempenho e ferramentas utilizadas por jogadores experientes no mundo todo, desde a instalação inicial até a empolgante jor-nada com a realidade aumentada. Você descobrirá a melhor forma de escolher o seu primeiro Pokémon, como encontrar o 4º Pokémon misterioso, as diferentes maneiras para se usar uma pokébola na hora da captura, como dobrar a eficácia de itens de captura de Pokémon, estratégias avançadas para defender academias de sua equipe de ataques rivais, entre muitos outros desafios. Tudo com a segurança que um treinador Pokémon necessita. \n\nPortanto, a partir de agora, você não precisa mais quebrar a cabeça tentando entender as mecânicas do jogo. Instale o aplicativo, pegue suas Pokébolas e "Gotta catch ''em all"!', NULL, 144, 'português', NULL, NULL, NULL, NULL, 'https://cache.skoob.com.br/local/images//dwQZlVh-kge9hiISODVrYDp6L0g=/200x/center/top/smart/filters:format(jpeg)/https://skoob.s3.amazonaws.com/livros/607094/POKEEA769MON_GO_DE_TREINADOR_1471983274607094SK1471983274B.jpg', NULL, NULL, 0, 0);
 
 -- --------------------------------------------------------
 
