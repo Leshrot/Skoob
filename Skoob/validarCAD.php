@@ -11,49 +11,53 @@ session_start();
 	mysql_select_db("db_skoob");
 
     # RECEBENDO VALORES DO FORMULÁRIO
-    $nome   = $_POST["txtnome"];
-    $apelido= $_POST["txtapelido"];
-    $sexo   = $_POST["opsexo"];
-    $estado = $_POST['opuf']
-    $email  = $_POST['txtemail']
-    $senha  = $_POST['psdsenha']
-    $csenha  = $_POST['psdsenhaConfirmacao']
+    $nmUsuario = $_POST['txtnome'];
+    $dsApelidoUsuario = $_POST['txtapelido'];
+    $sxUsuario = $_POST['opsexo'];
+    $dsUFUsuario = $_POST['opuf'];
+    $emailUsuario = $_POST['txtemail'];
+    $dsSenhaUsuario = $_POST['psdsenha'];
 
-    
-
-    # SELECT COMPARANDO LOGIN E SENHA COM BANCO
+    # SELECT COMPARANDO LOGIN E SENHA COM BANCO - ERRO
     $query = mysql_query("SELECT * FROM tb_leitor WHERE
-    	nm_leitor = '$nome' 
-    	OR ds_email_leitor = '$email'
-    	");
+        nm_leitor = '".$nmUsuario."' OR 
+        nm_apelido_leitor = '".$dsApelidoUsuario."'
+        ds_email_leitor = '".$emailUsuario."'
+        ");
 
     # VERIFICANDO TODAS AS LINHAS PARA ENCONTRAR USUÁRIO
-$result = mysql_num_rows($query);
-if($result == 1){
-	echo "Usuário já cadastrado";
-} else {
+        $result = mysql_num_rows($query);
+    if($result >= 1){
+        echo "Usuário já cadastrado";
+    } else {
+        $vSQL = "INSERT INTO `tb_leitor` (`nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `ds_distrito_leitor`, `ds_email_leitor`,`ds_senha_leitor`)  VALUES ( '" .$nmUsuario."', '".$dsApelidoUsuario."', '".$sxUsuario."', '".$dsUFUsuario."', '".$emailUsuario."', '".$dsSenhaUsuario."')";
 
-    // CONTA QUANTIDADE DE LINHAS DO BANCO PARA SER O ID DO INSERT
-    $count = "SELECT COUNT (cd_leitor) FROM tb_leitor";
-    $count = mysql_query($count);
-    echo $count;
-
-   	$vSQL = "INSERT INTO tb_leitor VALUES";
-	$vSQL .= "('$count','$nome','$dt_nasc_leitor','$email','$senha','$estado')";
-	
-	$result = mysql_query($vSQL);
-
+        $result = mysql_query($vSQL);
+        if ($result) {
+          echo "Seu cadastro foi realizado com sucesso";
+        } else {
+          echo "Não foi possível realizar o cadastro, tente novamente.";
+          // Exibe dados sobre o erro:
+          echo "Dados sobre o erro: " . mysql_error();
+        }
 }
-	
 
 	# INSTANCIANDO OBJETO LEITOR
 	while ($result = mysql_fetch_assoc($query)) {
+
+    $nmUsuario = $_POST['txtnome'];
+    $dsApelidoUsuario = $_POST['txtapelido'];
+    $sxUsuario = $_POST['opsexo'];
+    $dsUFUsuario = $_POST['opuf'];
+    $emailUsuario = $_POST['txtemail'];
+    $dsSenhaUsuario = $_POST['psdsenha'];
 	
-    $leitor->setNome($result['nm_leitor']);
-    $leitor->setDataN($result['dt_nasc_leitor']);
-    $leitor->setEmail($result['ds_email_leitor']);
-    $leitor->setSenha($result['ds_senha_leitor']);
-    $leitor->setUF($result['ds_distrito_leitor']);
+    $leitor->setNome($nmUsuario);
+    $leitor->setApelido($dsApelidoUsuario);
+    $leitor->setSexo($sxUsuario);
+    $leitor->setEmail($dsUFUsuario);
+    $leitor->setSenha($emailUsuario);
+    $leitor->setUF($dsSenhaUsuario);
     }
 	
 	# COOKIES E SESSION
@@ -61,9 +65,5 @@ if($result == 1){
 	setcookie ("senha", $leitor->getSenha(), 3000);
 	$_SESSION["UF"] = $leitor->getUF();
 	$_SESSION["nome"] = $leitor->getNome();
-echo '<script>window.location="Skoob_perfil.php";</script>';
-}
-else{
-	echo "usuario não encontrado";
-}
+/*echo '<script>window.location="[]";</script>';*/
 ?>

@@ -67,6 +67,58 @@
             </span>
         </div>
     </form>
+    <div data-ng-cloak data-ng-show="search_result" id="suggestions" data-ng-mouseover="leave = false">
+        <ul id="searchresults" style="list-style: none;">
+            <li data-ng-repeat="book in books" class="item-master">
+
+                <div class="capa">
+                    <a rel="nofollow" data-ng-href="/livro/{{book.livro_id}}ED{{book.id}}" title='{{book.nome_portugues}}' ng-cloack><img data-ng-src='{{book.img_url}}' alt="" ng-cloack></a>
+                </div>
+                <div class='search-item-links'>
+                    <div class='search-item-links-base'>
+                        <strong>
+                            <a rel="nofollow" data-ng-href="/livro/{{book.livro_id}}ED{{book.id}}" class='l13ab' ng-cloack>
+                                <book-name-format name="book.nome_portugues"  serie="book.serie" volume="book.volume" max="50"></book-name-format>
+                            </a>
+                        </strong>
+                        <div class="busca-subtitulo"><span data-ng-bind="book.subtitulo_portugues| limitTo:60" ng-cloack></span></div>
+                        <div class="busca-autor"><span data-ng-bind="book.autor| limitTo:60" ng-cloack></span></div>
+                    </div>
+
+                    <div class='mini'>
+                        <!-- idioma -->
+                        <img data-ng-if="book.idioma === 'es'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/es.gif" alt="espanha" title="espanha" class="bandeira">
+                        <img data-ng-if="book.idioma === 'us'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/us.gif" alt="ingles" title="ingles" class="bandeira">
+                        <img data-ng-if="book.idioma === 'al'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/ge.gif" alt="alemanha" title="alemanha" class="bandeira">
+                        <img data-ng-if="book.idioma === 'rs'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/ru.gif" alt="russia" title="russia" class="bandeira">
+                        <img data-ng-if="book.idioma === 'jp'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/jp.gif" alt="japao" title="japao" class="bandeira">
+                        <img data-ng-if="book.idioma === 'hl'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/nl.gif" alt="holanda" title="holanda" class="bandeira">
+                        <img data-ng-if="book.idioma === 'fr'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/fr.gif" alt="franca" title="franca" class="bandeira">
+                        <img data-ng-if="book.idioma === 'pt'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/pt.gif" alt="portugal" title="portugual" class="bandeira">
+                        <img data-ng-if="book.idioma === 'it'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/it.gif" alt="italia" title="italia" class="bandeira">
+                        <img data-ng-if="book.idioma === 'ep'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/ep.gif" alt="esperanto" title="esperanto" class="bandeira">
+                        <img data-ng-if="book.idioma === 'br'" src="//s3-sa-east-1.amazonaws.com/skoob-sp/flag/br.gif" alt="brasil" title="brasil" class="bandeira">
+                        <!-- editora -->
+                        <a data-ng-if="book.editora_id > 0" data-ng-href="/editora/{{book.editora_id}}-{{book.editora}}" class="l11" ng-cloack> {{book.editora}}</a>
+                        <span data-ng-if="book.editora_id === 0"> {{book.editora}}</span>
+                        <!-- edicoes -->
+                        <span data-ng-if="book.qt_edicoes <= 1">| edições: <span data-ng-bind="book.qt_edicoes"></span></span>
+                        <span data-ng-if="book.qt_edicoes > 1">| edições: <a data-ng-href="/livro/edicoes/{{book.livro_id}}" data-ng-bind="book.qt_edicoes" class="l11" ng-cloack></a></span>
+                        <!-- leitores -->
+                        <span>| leitores: <span data-ng-bind="book.qt_estantes | numberDecimal"></span></span>
+                    </div>
+                </div>
+                <br clear="all">
+            </li>
+            <li data-ng-cloak>
+                <form action="/livro/lista" method='post'>
+                    <input type='hidden' name='data[Busca][tag]' value='"{{busca}}"' ng-cloack />
+                    <input type='hidden' name='data[Busca][tipo]' value='livro' />
+                    <button type='submit'>Ver todos os (<span data-ng-bind="search_total | numberDecimal" ng-cloack></span>) resultados</button>
+                </form>
+            </li>
+        </ul>
+    </div>
 </div>
             <div id="topo-menu-dinamico">
                   
@@ -244,28 +296,19 @@
             <div class="alert alert-success">
      <button type="button" class="close" data-dismiss="alert" style="float:right;" onclick="$(this).parents('.alert').attr('style','display:none;');">&times;</button>
      <?php
-       include('class_user.php');
-
-      $nmUsuario = $_POST['txtnome'];
-      $dsApelidoUsuario = $_POST['txtapelido'];
-      $sxUsuario = $_POST['opsexo'];
-      $dsUFUsuario = $_POST['opuf'];
-      $emailUsuario = $_POST['txtemail'];
-      $dsSenhaUsuario = $_POST['psdsenha'];
-      (isset($_POST['chkautomatico']))?$icEmail = 1: $icEmail = 0;
-
-      $user = new user($nmUsuario,$dsApelidoUsuario,$sxUsuario,$dsUFUsuario,$emailUsuario,$dsSenhaUsuario, $icEmail);
-
-
-
-     /*  ESTÁ NA CALSSE Class_user
-     mysql_connect("localhost","root","") or
+      mysql_connect("localhost","root","") or
         die("Não foi possível conectar:" . mysql_error());
       mysql_select_db("db_skoob");
         
+        $nmUsuario = $_POST['txtnome'];
+        $dsApelidoUsuario = $_POST['txtapelido'];
+        $sxUsuario = $_POST['opsexo'];
+        $dsUFUsuario = $_POST['opuf'];
+        $emailUsuario = $_POST['txtemail'];
+        $dsSenhaUsuario = $_POST['psdsenha'];
+        (isset($_POST['chkautomatico']))?$icEmail = 1: $icEmail = 0;
         
-        
-        $vSQL = "INSERT INTO `tb_usuario` (`nmUsuario`, `dsApelidoUsuario`, `sxUsuario`, `dsUFUsuario`, `emailUsuario`,`dsSenhaUsuario`,`icEmail`)  VALUES ( '" .$nmUsuario."', '".$dsApelidoUsuario."', '".$sxUsuario."', '".$dsUFUsuario."', '".$emailUsuario."', '".$dsSenhaUsuario."', '".$icEmail."')";
+        $vSQL = "INSERT INTO `tb_leitor` (`nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `ds_distrito_leitor`, `ds_email_leitor`,`ds_senha_leitor`,`icEmail`)  VALUES ( '" .$nmUsuario."', '".$dsApelidoUsuario."', '".$sxUsuario."', '".$dsUFUsuario."', '".$emailUsuario."', '".$dsSenhaUsuario."', '".$icEmail."')";
 
         $result = mysql_query($vSQL);
         if ($result) {
@@ -274,7 +317,7 @@
           echo "Não foi possível realizar o cadastro, tente novamente.";
           // Exibe dados sobre o erro:
           echo "Dados sobre o erro: " . mysql_error();
-        } */
+        }
       ?>
       </div>        </div>
 
