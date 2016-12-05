@@ -1,6 +1,4 @@
 <?php
-session_start();
-
     # INSTANCIANDO LEITOR
     require_once("classes/leitor.php");
     $leitor = new Leitor();
@@ -11,12 +9,17 @@ session_start();
 	mysql_select_db("db_skoob");
 
     # RECEBENDO VALORES DO FORMULÁRIO
+
+if (isset($_POST["submit"])) { 
     $nmUsuario = $_POST['txtnome'];
     $dsApelidoUsuario = $_POST['txtapelido'];
     $sxUsuario = $_POST['opsexo'];
     $dsUFUsuario = $_POST['opuf'];
     $emailUsuario = $_POST['txtemail'];
     $dsSenhaUsuario = $_POST['psdsenha'];
+}
+
+if (isset($nmUsuario, $dsApelidoUsuario, $emailUsuario)){
 
     # SELECT COMPARANDO LOGIN E SENHA COM BANCO - ERRO
     $query = mysql_query("SELECT * FROM tb_leitor WHERE
@@ -69,5 +72,7 @@ session_start();
           // Exibe dados sobre o erro:
           echo "Dados sobre o erro: " . mysql_error();
         }
+    }
 }
+
 ?>

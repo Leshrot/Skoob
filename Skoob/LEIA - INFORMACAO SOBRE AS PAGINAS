@@ -1,7 +1,8 @@
 URGENTE:
 // CADASTRO USUÁRIO E LOGIN LEITOR == BRUNO E DIOGO
 
-convite.html = Cadastra os dados do usuário
+convite.php = Cadastra os dados do usuário
+validarCAD.php = VALIDA O CADASTRO.
 confCAD.html = Pergunta se você quer postar no facebook os livros que leu e etc, usar "href" pra próxima página nas duas opções 
 (Clique para autorizar) e (Não obrigado)
 jaliCAD.html = Pergunta os livros que você já leu
@@ -11,25 +12,17 @@ login.html = onde o usuário preenche os dados de login
 validar.php = valida o login.
 verificarcookie.php = verifica se os cookies estão ativos.
 
-
-
-// CADASTRO LIVRO == LUIZ E BETO
-
-livroCAD.html = pede o ISBN para cadastrar o livro.
-Colocar formulário com todas as colunas do banco de dados para preencher, além do ISBN.
-
-
-
-// PÁGINA LIVRO - LOGADO == WELTON E BETO
+// PÁGINA LIVRO - LOGADO == LUIS, BETO
 livro.html = página que apresenta o livro para quem está logado
-
-
 
 // PERFIL LEITOR - LOGADO == DIOGO E WELTON
 
-perfil = página do perfil
+Perfil = página do perfil
 editar_foto = Recebe a foto do perfil e altera
 (o essencial é fazer possível editar a foto, e a foto aparecer no canto direito da navbar)
+
+// PESQUISAR LIVRO == DIOGO
+MENU PESQUISAR COM SELECT NO BANCO (sem página definida, podemos usar a página de perfil como template)
 
 ______________________________________________________________________
 TRABALHAR DEPOIS:
@@ -41,8 +34,7 @@ FAZER O MODAL AO CLICAR NUM LIVRO (COM A TELA "EDITAR PARA TROCA" APENAS)
 
 
 
-// PESQUISAR LIVRO == (ULTIMO PONTO A SE TRABALHAR)
-MENU PESQUISAR COM SELECT NO BANCO (sem página definida, podemos usar a página de perfil como template)
+
 
 
 
