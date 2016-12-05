@@ -20,8 +20,10 @@ session_start();
 
     # SELECT COMPARANDO LOGIN E SENHA COM BANCO - ERRO
     $query = mysql_query("SELECT * FROM tb_leitor WHERE
-        nm_leitor = '".$nmUsuario."' OR 
-        nm_apelido_leitor = '".$dsApelidoUsuario."'
+        nm_leitor = '".$nmUsuario."' 
+        OR
+        nm_apelido_leitor = '".$dsApelidoUsuario."' 
+        OR
         ds_email_leitor = '".$emailUsuario."'
         ");
 
@@ -30,40 +32,42 @@ session_start();
     if($result >= 1){
         echo "Usuário já cadastrado";
     } else {
-        $vSQL = "INSERT INTO `tb_leitor` (`nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `ds_distrito_leitor`, `ds_email_leitor`,`ds_senha_leitor`)  VALUES ( '" .$nmUsuario."', '".$dsApelidoUsuario."', '".$sxUsuario."', '".$dsUFUsuario."', '".$emailUsuario."', '".$dsSenhaUsuario."')";
+        # INSERÇÃO NO BANCO DE DADOS
+        $vSQL = "INSERT INTO `tb_leitor` (`nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `ds_distrito_leitor`, `ds_email_leitor`,`ds_senha_leitor`)  VALUES ('".$nmUsuario."', '".$dsApelidoUsuario."', '".$sxUsuario."', '".$dsUFUsuario."', '".$emailUsuario."', '".$dsSenhaUsuario."')";
 
         $result = mysql_query($vSQL);
         if ($result) {
           echo "Seu cadastro foi realizado com sucesso";
+
+            # INSTANCIANDO OBJETO LEITOR
+    while ($result = mysql_fetch_assoc($query)) {
+
+        $nmUsuario = $_POST['txtnome'];
+        $dsApelidoUsuario = $_POST['txtapelido'];
+        $sxUsuario = $_POST['opsexo'];
+        $dsUFUsuario = $_POST['opuf'];
+        $emailUsuario = $_POST['txtemail'];
+        $dsSenhaUsuario = $_POST['psdsenha'];
+    
+        $leitor->setNome($nmUsuario);
+        $leitor->setApelido($dsApelidoUsuario);
+        $leitor->setSexo($sxUsuario);
+        $leitor->setEmail($dsUFUsuario);
+        $leitor->setSenha($emailUsuario);
+        $leitor->setUF($dsSenhaUsuario);
+        }
+    
+        # COOKIES E SESSION
+        setcookie ("usuario", $leitor->getEmail(), 3000);
+        setcookie ("senha", $leitor->getSenha(), 3000);
+        $_SESSION["UF"] = $leitor->getUF();
+        $_SESSION["nome"] = $leitor->getNome();
+
+          echo '<script>window.location="confCAD.php";</script>';
         } else {
           echo "Não foi possível realizar o cadastro, tente novamente.";
           // Exibe dados sobre o erro:
           echo "Dados sobre o erro: " . mysql_error();
         }
 }
-
-	# INSTANCIANDO OBJETO LEITOR
-	while ($result = mysql_fetch_assoc($query)) {
-
-    $nmUsuario = $_POST['txtnome'];
-    $dsApelidoUsuario = $_POST['txtapelido'];
-    $sxUsuario = $_POST['opsexo'];
-    $dsUFUsuario = $_POST['opuf'];
-    $emailUsuario = $_POST['txtemail'];
-    $dsSenhaUsuario = $_POST['psdsenha'];
-	
-    $leitor->setNome($nmUsuario);
-    $leitor->setApelido($dsApelidoUsuario);
-    $leitor->setSexo($sxUsuario);
-    $leitor->setEmail($dsUFUsuario);
-    $leitor->setSenha($emailUsuario);
-    $leitor->setUF($dsSenhaUsuario);
-    }
-	
-	# COOKIES E SESSION
-	setcookie ("usuario", $leitor->getEmail(), 3000);
-	setcookie ("senha", $leitor->getSenha(), 3000);
-	$_SESSION["UF"] = $leitor->getUF();
-	$_SESSION["nome"] = $leitor->getNome();
-/*echo '<script>window.location="[]";</script>';*/
 ?>

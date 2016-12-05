@@ -295,30 +295,7 @@
 <div style="margin-top:70px;">        <div style="width:950px;margin:auto;">
             <div class="alert alert-success">
      <button type="button" class="close" data-dismiss="alert" style="float:right;" onclick="$(this).parents('.alert').attr('style','display:none;');">&times;</button>
-     <?php
-      mysql_connect("localhost","root","") or
-        die("Não foi possível conectar:" . mysql_error());
-      mysql_select_db("db_skoob");
-        
-        $nmUsuario = $_POST['txtnome'];
-        $dsApelidoUsuario = $_POST['txtapelido'];
-        $sxUsuario = $_POST['opsexo'];
-        $dsUFUsuario = $_POST['opuf'];
-        $emailUsuario = $_POST['txtemail'];
-        $dsSenhaUsuario = $_POST['psdsenha'];
-        (isset($_POST['chkautomatico']))?$icEmail = 1: $icEmail = 0;
-        
-        $vSQL = "INSERT INTO `tb_leitor` (`nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `ds_distrito_leitor`, `ds_email_leitor`,`ds_senha_leitor`,`icEmail`)  VALUES ( '" .$nmUsuario."', '".$dsApelidoUsuario."', '".$sxUsuario."', '".$dsUFUsuario."', '".$emailUsuario."', '".$dsSenhaUsuario."', '".$icEmail."')";
 
-        $result = mysql_query($vSQL);
-        if ($result) {
-          echo "Seu cadastro foi realizado com sucesso";
-        } else {
-          echo "Não foi possível realizar o cadastro, tente novamente.";
-          // Exibe dados sobre o erro:
-          echo "Dados sobre o erro: " . mysql_error();
-        }
-      ?>
       </div>        </div>
 
         <div id='container-full' class=''>
