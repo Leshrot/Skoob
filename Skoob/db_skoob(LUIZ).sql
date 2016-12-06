@@ -1,23 +1,24 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: 05-Dez-2016 às 21:21
--- Versão do servidor: 10.1.16-MariaDB
--- PHP Version: 5.5.38
+-- Servidor: localhost
+-- Tempo de Geração: Nov 29, 2016 as 01:17 AM
+-- Versão do Servidor: 5.1.41
+-- Versão do PHP: 5.3.1
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+CREATE DATABASE IF NOT EXISTS db_skoob;
+USE db_skoob;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
--- Database: `db_skoob`
+-- Banco de Dados: `db_skoob`
 --
 
 -- --------------------------------------------------------
@@ -26,7 +27,9 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `tb_autor`
 --
 
-CREATE TABLE `tb_autor` (
+
+
+CREATE TABLE IF NOT EXISTS `tb_autor` (
   `cd_autor` int(11) NOT NULL,
   `nm_autor` varchar(50) NOT NULL,
   `ds_url_autor` varchar(500) NOT NULL,
@@ -48,10 +51,29 @@ INSERT INTO `tb_autor` (`cd_autor`, `nm_autor`, `ds_url_autor`, `ds_autor`, `ds_
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tb_editora`
+-- Estrutura da tabela `tb_avaliacao_autor`
 --
 
-CREATE TABLE `tb_editora` (
+CREATE TABLE IF NOT EXISTS `tb_avaliacao_autor` (
+  `cd_avaliacao_autor` int(11) NOT NULL,
+  `vl_avaliacao_autor` int(3) DEFAULT NULL,
+  `tb_autor_cd_autor` int(11) NOT NULL,
+  PRIMARY KEY (`cd_avaliacao_autor`),
+  KEY `tb_avaliacao_autor_tb_autor_FK` (`tb_autor_cd_autor`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_avaliacao_autor`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_avaliacao_editora`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_editora` (
   `cd_editora` int(11) NOT NULL,
   `nm_editora` varchar(20) NOT NULL,
   `ds_url_editora` varchar(500) NOT NULL,
@@ -68,6 +90,111 @@ INSERT INTO `tb_editora` (`cd_editora`, `nm_editora`, `ds_url_editora`, `ds_edit
 (3, 'Arqueiro', 'http://www.editoraarqueiro.com.br/', 'Geraldo Jordão Pereira (1938-2008) começou sua carreira aos 17 anos, quando foi trabalhar com seu pai, o célebre editor José Olympio, publicando obras marcantes como O menino do dedo verde, de Maurice Druon, e Minha vida, de Charles Chaplin. \r\n\r\nEm 1976, fundou a Editora Salamandra com o propósito de formar uma nova geração de leitores e acabou criando um dos catálogos infantis mais premiados do Brasil. Em 1992, fugindo de sua linha editorial, lançou Muitas vidas, muitos mestres, de Brian Weiss, livro que deu origem à Editora Sextante. \r\n\r\nFã de histórias de suspense, Geraldo descobriu O Código Da Vinci antes mesmo de ele ser lançado nos Estados Unidos. A aposta em ficção, que não era o foco da Sextante, foi certeira: o título se transformou em um dos maiores fenômenos editoriais de todos os tempos. \r\n\r\nMas não foi só aos livros que se dedicou. Com seu desejo de ajudar o próximo, Geraldo desenvolveu diversos projetos sociais que se tornaram sua grande paixão. \r\nCom a missão de publicar histórias empolgantes, tornar os livros cada vez mais acessíveis e despertar o amor pela leitura, a Editora Arqueiro é uma homenagem a esta figura extraordinária, capaz de enxergar mais além, mirar nas coisas verdadeiramente importantes e não perder o idealismo e a esperança diante dos desafios e contratempos da vida.'),
 (4, '#IRADO', 'http://www.ncirado.com.br/', ''),
 (5, 'Sextante', 'http://www.esextante.com.br', 'Numa época em que o homem só dispunha do céu e das estrelas para se orientar, o Sextante era uma ferramenta fundamental para se atingir o destino desejado. Observando através do Sextante, o navegador se norteava, medindo a distância entre os astros e o horizonte. \r\n\r\nFoi por essa razão que escolhemos o nome Sextante para nossa editora, fundada em 1998. Vivemos, nesse início do terceiro milênio, um momento de inquietação e ansiedade, em que a aparente perda de valores essenciais convive com uma intensa busca da felicidade. Conscientes dessa realidade, investimos para que cada produto da Sextante um instrumento precioso para alcançar a paz interior, a espiritualidade e o crescimento pessoal, tratando sempre de temas importantes para a plena realização humana.');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_avaliacao_livro`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_avaliacao_livro` (
+  `cd_avaliacao_livro` int(11) NOT NULL,
+  `vl_avaliacao_livro` int(3) DEFAULT NULL,
+  `tb_livro_cd_isbn_10_livro` int(11) NOT NULL,
+  `tb_livro_cd_isbn_13_livro` int(11) NOT NULL,
+  PRIMARY KEY (`cd_avaliacao_livro`),
+  KEY `tb_avaliacao_livro_tb_livro_FK` (`tb_livro_cd_isbn_10_livro`,`tb_livro_cd_isbn_13_livro`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_avaliacao_livro`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_categoria`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_categoria` (
+  `cd_categoria` int(11) NOT NULL,
+  `ds_categoria` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`cd_categoria`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_categoria`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_comentario`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_comentario` (
+  `cd_comentario` int(11) NOT NULL,
+  `ds_comentario` varchar(200) DEFAULT NULL,
+  `dt_comentario` date DEFAULT NULL,
+  `qt_curtidas_comentario` int(11) DEFAULT NULL,
+  `tb_leitor_cd_leitor_tb_leitor_cd_leitor_ID` int(3) NOT NULL,
+  PRIMARY KEY (`cd_comentario`),
+  KEY `tb_comentario_tb_leitor_cd_leitor_FK` (`tb_leitor_cd_leitor_tb_leitor_cd_leitor_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_comentario`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_editora`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_editora` (
+  `cd_editora` int(11) NOT NULL,
+  `nm_editora` varchar(20) DEFAULT NULL,
+  `ds_editora` varchar(100) DEFAULT NULL,
+  `ds_site_editora` varchar(100) DEFAULT NULL,
+  `cd_prefixo_editora` int(11) DEFAULT NULL,
+  `nr_cnpj_editora` int(11) DEFAULT NULL,
+  `ds_url_logo_editora` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`cd_editora`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_editora`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_leitor`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_leitor` (
+  `cd_leitor` int(11) NOT NULL,
+  `nm_leitor` varchar(40) DEFAULT NULL,
+  `nm_apelido_leitor` varchar(40) DEFAULT NULL,
+  `ds_sexo_leitor` char(1) DEFAULT NULL,
+  `dt_nasc_leitor` date DEFAULT NULL,
+  `ds_email_leitor` varchar(40) DEFAULT NULL,
+  `ds_senha_leitor` varchar(16) DEFAULT NULL,
+  `ds_distrito_leitor` char(2) DEFAULT NULL,
+  PRIMARY KEY (`cd_leitor`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_leitor`
+--
+
+INSERT DELAYED IGNORE INTO `tb_leitor` (`cd_leitor`, `nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `dt_nasc_leitor`, `ds_email_leitor`, `ds_senha_leitor`, `ds_distrito_leitor`) VALUES
+(3, 'Diogo Camilo', 'Camilo', 'M', '1997-01-02', 'diogo@gmail.com', 'rgbs', 'SP');
 
 -- --------------------------------------------------------
 
@@ -107,6 +234,85 @@ INSERT INTO `tb_livro` (`cd_isbn_10_livro`, `cd_isbn_13_livro`, `nm_livro`, `ds_
 (8581637558, 9788581637556, 'Pokémon Go: De treinador a mestre', 'Guia não oficial', 'Os Pokémon invadiram o mundo que conhecemos! O sonho nutrido por fãs há 20 anos finalmente se tornou realidade. Agora é possível encontrar os monstrinhos de bolso em todos os lugares: na vizinhança, na escola, no trabalho e até no sofá de casa. Tudo isso graças ao aplicativo que causou uma nova febre mundial: Pokémon GO.\n\nEste guia o auxiliará com diversas dicas de desempenho e ferramentas utilizadas por jogadores experientes no mundo todo, desde a instalação inicial até a empolgante jor-nada com a realidade aumentada. Você descobrirá a melhor forma de escolher o seu primeiro Pokémon, como encontrar o 4º Pokémon misterioso, as diferentes maneiras para se usar uma pokébola na hora da captura, como dobrar a eficácia de itens de captura de Pokémon, estratégias avançadas para defender academias de sua equipe de ataques rivais, entre muitos outros desafios. Tudo com a segurança que um treinador Pokémon necessita. \n\nPortanto, a partir de agora, você não precisa mais quebrar a cabeça tentando entender as mecânicas do jogo. Instale o aplicativo, pegue suas Pokébolas e "Gotta catch ''em all"!', 'Jogos / Literatura Brasileira', 2016, '1', 144, 'português', 'img/livro/pokemon.jpg', '3.6', 27, 'img/livro/pokemon', '', NULL, NULL, 4, 4),
 (8543104335, 9788543104331, 'A coragem de ser imperfeito', 'Como aceitar a própria vulnerabilidade, vencer a vergonha e ousar ser quem você é', 'Brené Brown ousou tocar em assuntos que costumam ser evitados por causarem grande desconforto. Sua palestra a respeito de vulnerabilidade, medo, vergonha e imperfeição já teve mais de 25 milhões de visualizações.\r\n\r\nViver é experimentar incertezas, riscos e se expor emocionalmente. Mas isso não precisa ser ruim. Como mostra Brené Brown, a vulnerabilidade não é uma medida de fraqueza, mas a melhor definição de coragem.\r\n\r\nQuando fugimos de emoções como medo, mágoa e decepção, também nos fechamos para o amor, a aceitação e a criatividade. Por isso, as pessoas que se defendem a todo custo do erro e do fracasso acabam se frustrando e se distanciando das experiências marcantes que dão significado à vida.\r\n\r\nPor outro lado, as que se expõem e se abrem para coisas novas são mais autênticas e realizadas, ainda que se tornem alvo de críticas e de inveja. É preciso lidar com os dois lados da moeda para se ter uma vida plena.\r\n\r\nEm sua pesquisa pioneira sobre vulnerabilidade, Brené Brown concluiu que fazemos uso de um verdadeiro arsenal contra a vergonha de nos expor e a sensação de não sermos bons o bastante, e que existem estratégias eficazes para serem usadas nesse “desarmamento”.\r\n\r\nNeste livro, ela apresenta suas descobertas e estratégias bem-sucedidas, toca em feridas delicadas e provoca grandes insights, desafiando-nos a mudar a maneira como vivemos e nos relacionamos.', 'Autoajuda / Não-ficção / Negócios e Empreendedorismo / Psicologia', 2016, '1', 208, 'português', 'img/livro/CORAGEM_DE_SER_IMPERFEITO.jpg', '4.1', 118, 'img/livro/A_CORAGEM.jpg', 'Livros & Nego?cios | Livro A Coragem De Ser I', 'img/video/coragem.jpg', 'https://www.skoob.com.br/livro/video/a-coragem-de-ser-imperfeito/344198/X_Ng-EDBb1g', 5, 5),
 (8550300500, 9788550300504, 'Sou Luna', 'A aventura vai começar!\r\nSou Luna # 01', 'pois seus pais receberam uma oportunidade de trabalho irrecusável na Argentina. A garota não fica feliz com a ideia de ter de deixar para trás seus amigos, sua escola e suas tardes andando de patins, mas está disposta a abraçar essa nova aventura.\r\nNo novo país, Luna precisa se redescobrir ao fazer novos amigos, encarar a nova escola e, principalmente, se dedicar ao que mais gostar de fazer: patinar! A Argentina a recebe com uma enorme surpresa, que também é um desafio: uma pista de patinação incrível e uma competição que une patins, dança e música. Agora, ela não só terá de se superar com os patins, mas também deverá dançar muito se quiser vencer.', 'Aventura / Infantil / Infantojuvenil', 2016, '1', 144, 'português', 'img/livro/SOU_LUNA.jpg', '4.9', 10, 'img/livro/SOU_LUNA.jpg', 'Book Haul de Outubro l Não resisti a tentação', 'img/video/bookhaul.jpg', 'https://www.skoob.com.br/livro/video/sou-luna/607088/4B5dutn74iA', 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_livro_autor`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_livro_autor` (
+  `tb_livro_cd_isbn_10_livro` int(11) NOT NULL,
+  `tb_livro_cd_isbn_13_livro` int(11) NOT NULL,
+  `tb_autor_cd_autor` int(11) NOT NULL,
+  PRIMARY KEY (`tb_livro_cd_isbn_10_livro`,`tb_livro_cd_isbn_13_livro`,`tb_autor_cd_autor`),
+  KEY `FK_ASS_13` (`tb_autor_cd_autor`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_livro_autor`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_livro_categoria`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_livro_categoria` (
+  `tb_livro_cd_isbn_10_livro` int(11) NOT NULL,
+  `tb_livro_cd_isbn_13_livro` int(11) NOT NULL,
+  `tb_categoria_cd_categoria` int(11) NOT NULL,
+  PRIMARY KEY (`tb_livro_cd_isbn_10_livro`,`tb_livro_cd_isbn_13_livro`,`tb_categoria_cd_categoria`),
+  KEY `FK_ASS_11` (`tb_categoria_cd_categoria`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_livro_categoria`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_livro_leitor`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_livro_leitor` (
+  `ds_status_leitura` varchar(10) DEFAULT NULL,
+  `ds_status_livro` varchar(50) DEFAULT NULL,
+  `tb_livro_cd_isbn_10_livro` int(11) NOT NULL,
+  `tb_livro_cd_isbn_13_livro` int(11) NOT NULL,
+  `tb_leitor_cd_leitor` int(11) NOT NULL,
+  `tb_leitor_cd_leitor_ID` int(3) NOT NULL,
+  PRIMARY KEY (`tb_leitor_cd_leitor_ID`),
+  KEY `tb_leitor_cd_leitor_tb_leitor_FK` (`tb_leitor_cd_leitor`),
+  KEY `tb_leitor_cd_leitor_tb_livro_FK` (`tb_livro_cd_isbn_10_livro`,`tb_livro_cd_isbn_13_livro`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_livro_leitor`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `tb_loja`
+--
+
+CREATE TABLE IF NOT EXISTS `tb_loja` (
+  `cd_loja` int(11) NOT NULL,
+  `nm_loja` varchar(50) DEFAULT NULL,
+  `ds_site_loja` varchar(100) DEFAULT NULL,
+  `vl_livro_loja` int(3) DEFAULT NULL,
+  PRIMARY KEY (`cd_loja`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `tb_loja`
+--
 
 -- --------------------------------------------------------
 
