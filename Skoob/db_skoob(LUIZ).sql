@@ -283,10 +283,10 @@ CREATE TABLE IF NOT EXISTS `tb_livro_categoria` (
 CREATE TABLE IF NOT EXISTS `tb_livro_leitor` (
   `ds_status_leitura` varchar(10) DEFAULT NULL,
   `ds_status_livro` varchar(50) DEFAULT NULL,
-  `tb_livro_cd_isbn_10_livro` int(11) NOT NULL,
-  `tb_livro_cd_isbn_13_livro` int(11) NOT NULL,
+  `tb_livro_cd_isbn_10_livro` bigint(20) NOT NULL,
+  `tb_livro_cd_isbn_13_livro` bigint(20) NOT NULL,
   `tb_leitor_cd_leitor` int(11) NOT NULL,
-  `tb_leitor_cd_leitor_ID` int(3) NOT NULL,
+  `tb_leitor_cd_leitor_ID` int(3) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`tb_leitor_cd_leitor_ID`),
   KEY `tb_leitor_cd_leitor_tb_leitor_FK` (`tb_leitor_cd_leitor`),
   KEY `tb_leitor_cd_leitor_tb_livro_FK` (`tb_livro_cd_isbn_10_livro`,`tb_livro_cd_isbn_13_livro`)
