@@ -29,10 +29,11 @@ if($result == 1){
     $leitor->setUF($result['ds_distrito_leitor']);
     }
 	// cookies e session
-	setcookie ("usuario", $leitor->getEmail(), 3000);
-	setcookie ("senha", $leitor->getSenha(), 3000);
+	setcookie ("usuario", $leitor->getEmail(), 60);
+	setcookie ("senha", $leitor->getSenha(), 60);
 	$_SESSION["UF"] = $leitor->getUF();
 	$_SESSION["nome"] = $leitor->getNome();
+	$_SESSION["senha"] = $leitor->getSenha();
 echo '<script>window.location="Skoob_perfil.php";</script>';
 }
 else{
