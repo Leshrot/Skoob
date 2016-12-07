@@ -52,6 +52,7 @@
 
     <body id="ng-app" ng-app="skoob">
 
+
     <div>
         <div id='topo' class='navbar navbar-fixed-top' style='height:48px;'>
       
@@ -302,6 +303,7 @@
             <br clear='all' />
       </div>
 </div>
+
 <div style="margin-top:70px;">        <div style="width:950px;margin:auto;">
                     </div>
 
@@ -357,6 +359,9 @@
     # LIBERA MEMÓRIA DO QUERY
     mysql_free_result($result);
 
+    $_SESSION["nome"]="Diogo Camilo";
+
+    printf($_SESSION["nome"]);
     # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
       $result = mysql_query(
           "SELECT cd_leitor
@@ -376,7 +381,7 @@
     mysql_free_result($result);
 
     # INSERE NA TABELA LIVRO LEITOR OS VALORES ENCONTRADOS NAS PESQUISAS E ARMAZENADOS NAS VARIAVEIS
-      $vSQL = "INSERT INTO `tb_livro_leitor` (`cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'JA LI')";
+      $vSQL = "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'JA LI')";
 
     # FAZ A QUERY DA VARIAVEL ACIMA
       $result = mysql_query($vSQL);
