@@ -67,7 +67,6 @@
                                <a href='/Skoob/editar_foto.php/' ng-if='perfil_foto_trocar' id='perfil-usuario-foto-troca' ng-cloak><i class='icon-camera'></i> Mudar foto</a>  
                                <img src="<?php print($_SESSION["foto"])?>" style='margin-right:10px; padding:0px; border:none;' width='173' height='173'>
 </div>
-
               <div id="b-usermenu-icons-top" data-ng-controller="userToolButtons">
                           <div class="btn-group btn-group-justified group-mini" style="width:170px;">
                                       <div class="btn-group" ng-cloak><a href="/usuario/editar_cadastro/" tooltip="Preferências" class="btn btn-default" style="color:#0087bf !important;"><span class="icon-config" style="font-size:15px;"></span></a></div>                                      <div class="btn-group" ng-cloak>

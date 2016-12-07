@@ -1,9 +1,8 @@
 <?php include("header.php"); ?>
-
-<!DOCTYPE html>
+          <!DOCTYPE html>
 <html xmlns='//www.w3.org/1999/xhtml'>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# books: http://ogp.me/ns/books#">
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />        <title>Livros que já li - SKOOB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />        <title>Estante Virtual - Leshrot</title>
                 <meta name="language" content="pt-br"/>
         <meta name="google-site-verification" content="h_F9-djAws40JfpX_W4juzsPjd9YZ2v-s0YvOG-D388"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -48,104 +47,182 @@
     </head>
 
     <body id="ng-app" ng-app="skoob">
-
-<div style="margin-top:70px;">        <div style="width:950px;margin:auto;">
+    
+<div style="margin-top:104px">        <div style="width:950px;margin:auto;">
                     </div>
 
         <div id='container-full' class=''>
             <div id='corpo' data-ng-controller="mainCtrl as main">
-                <div class="corner8" style="text-align:left; border:#B7D0E6 2px solid; margin:40px 0px; padding:20px;  font-family:trebuchet ms;">
-            <h1 style='font-size:24px; color:#71951E;'>Selecione os livros que você já leu</h1>
-            <i>Listamos os livros mais lidos no momento.</i> Calma! Você não precisa marcar todos agora. :)
-            <br />
-            <hr />
-            <div style='border:green 0px solid; margin:0px; padding:0px; width:920px;'>
-            <?php
-                @require('conexaobd.php');
+                <style>
+     .estante-livros-horizontal{float:left; margin-left:13.5px; width: 72px; height: 125px;}
+     .livro-capa{width:70px;height:101px;}
+     .livro-capa img{width:70px;height:101px;border:1px solid #f1f1f1; border-width: 1px 1px 1px 0px; }
+     .estante-livros-vertical{float:left; margin:0 0 12px 13.5px; height: 125px;border-bottom:1px solid #ccc;width:754px;}
+     .estante-livros-vertical .livro-capa{width:70px;height:101px;float:left;display:block;}
+     .estante-livros-vertical .livro-capa img{width:70px;height:101px;}
+     .livro-conteudo{width:500px;height:101px;float:left;margin-left:10px;}
+     .tmp-menu-left div{float:left;}
+     .tmp-menu-left div.blista, .tmp-menu-left div.blistaon{float:right;}
+     .pagination{margin:0px;}
+     .drop-shadow-left {box-shadow: -2px 0 5px -2px rgba(0,0,0,0.4) !important;}
+     .bt-livro-excluir { border-radius: 50%; border:4px solid red; background-color:red; padding:2px; padding-top: 1px; position: absolute; z-index: 1100; margin-top: 5px; right: -10px; color:#fff; font-size: 15px; height: 15px; width: 15px; text-align: center; display: none;  cursor:pointer; } 
+</style>
 
-                $result = mysql_query("SELECT cd_isbn_10_livro, cd_isbn_13_livro, ds_url_capa_livro FROM tb_livro");
+<div data-ng-controller="bookcase" ng-init="estante('books', 3967192, 0, 1);">
+     <div id="meu_perfil" style='background-color:#fff; border: none;  padding-bottom:0px; width:955px;  margin-top:10px; margin-bottom:2px; text-align:left; height:75px;'>
+            <a href="Skoob_perfil.php" style="width:70px;height:70px;overflow:hidden;display:block;float:left;margin-right:10px;" class="round-4"><img src="<?php print($_SESSION["foto"]);?>" style="margin-right:10px; float:left;  padding:0px;" alt=""/></a>
+            <div style='float:left; width:840px;  border:none; text-align:left; font-size:12px; padding:0px;'>
+                        <div style='background-color:#fff; width:845px;  height: 21px; border:red 0px solid;'>
+                                    <div style='display:block; float:left; font-size:20px; font-weight:bold; margin-right:10px; padding:0px;'><?php print($_SESSION["nome"]);?></div>                                    <br clear="all" />
+                                    <div style="margin: 10px 0 10px 0;">
 
-                while ($row = mysql_fetch_assoc($result)) {
-                  echo ("<div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
-                              <img src=".$row['ds_url_capa_livro']." width='100' height='145' style='margin-bottom: 5px;'>
-                                    <add-book shelf-id='1'  book-id='323291'></add-book>
-                                    <form action='#' method='post'>
-                                    <input type='hidden' name='isbn' value=". $row['cd_isbn_10_livro']."/>
-                                    <input type='submit' class='btn btn-default btn-block ng-scope' value='Já li'
-                                    data-ng-click='add()'>
-                                    </form>
-                            </div>");
-                }
-    
-    # LIBERA MEMÓRIA DO QUERY
-    mysql_free_result($result);
+                                                                                    </div>
+                        </div>
+                        <br clear="all" />
+                        <div id='menubusca-' style='padding:0px; margin:0px; width:880px; float:left;' ><ul class='nav nav-tabs' style='width:880px; margin-bottom:0px; padding-bottom:0px;'><li class="active"><a href="/estante/livros/todos/3967192/page:1">Estante</a></li><li ><a href="/estante/resenhas/3967192">Resenhas</a></li><li ><a href="/recados/mensagens">Recados</a></li><li ><a href="/amigos/listar/3967192/">Amigos</a></li><li ><a href="/grupo/usuario/3967192/">Grupos</a></li><li ><a href="/seguidores/listar/3967192/">Seguidores</a></li><li ><a href="/seguidos/listar/3967192/">Seguidos</a></li><li class="onblue"><a href="/troca/">Plus / Trocas</a></li></ul></div>            </div>
+</div>
+<br clear='all' />
+<div id='ferramentas' style='height:27px;width:960px; border:none; padding:0px; margin-top:-12px; padding-bottom:10px; border-bottom:1px solid #F4F3F5;'><div style='border:0px solid red; float:left; margin-top:3px;'><a href="/estante/livros/todos/3967192/" class="bt_ativo curva2-5" style="color:#666 !important">Livros 22</a><a href="/estante/quadrinhos/todos/3967192/" class="bt curva2-5" style="color:#666 !important">Quadrinhos</a><a href="/estante/revistas/todos/3967192/" class="bt curva2-5" style="color:#666 !important">Revistas</a><div id='box_bt_est'>     <a href='javascript:{}' ng-click="estanteFormatoClassInline('estante-livros-horizontal')" title='Estante horizontal' id='besth' class='bt_est {{formato_bt_horizontal}}'><img src="https://s3-sa-east-1.amazonaws.com/skoob-sp/icones/est_h_on.gif" /></a>
+<a href='javascript:{}' ng-click="estanteFormatoClassInline('estante-livros-vertical')" title='Estante vertical' id='besth' class='bt_est {{formato_bt_vertical}}'><img src="https://s3-sa-east-1.amazonaws.com/skoob-sp/icones/est_v_on.gif" /></a>
+     </div><div id='box_org'><i class="icon-loop" style="margin:0px 4px 2px 5px;"></i><a href="/estante/organizar/livros" class="">organizar</a></div><br clear='all'></div>
+<form action='javascript:{}' method='post' class='form-group form-group-sm' style='border:0px solid green; height:27px; float:right; width: 240px;'>
+            <div class="input-group" style='float:right;'>
+                        <input type="text" data-ng-model="termo_busca" id="inputString" class="form-control" style="width: 170px; padding: 0px 8px !important; height: 27px; margin: 0px; float: right;">
+                        <span class="input-group-btn" style="border:0px solid blue;margin:0px; padding: 0px !important; height: 27px; box-shadow:none !important;">
 
-    # PREENCHE O IS10 COM O VALOR DO ISBN DO LIVRO QUE FOR CLICADO
-      $is10 = $_POST['isbn'];
-    
-    # PROCURA OS VALORES DO ISBN10 E 13 DO LIVRO CLICADO
-    $result = mysql_query(
-          "SELECT cd_isbn_10_livro, cd_isbn_13_livro
-          FROM tb_livro
-          WHERE cd_isbn_10_livro = '".$is10."'
-          ");
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height:29px; margin-top: 0px !important; border-radius: 0px; color:#3189C8 !important; padding-bottom: 5px; margin-right: -5px !important;"><i class='{{tipo_local_class}}'></i></button>
 
-    # PREENCHE AS VARIÁVEIS ISBN10 E ISBN13 COM O VALOR DOS ISBN 10 E 13 ENCONTRADOS
-      while ($row = mysql_fetch_assoc($result)) {
-        $isbn10 = $row['cd_isbn_10_livro'];
-        $isbn13 = $row['cd_isbn_13_livro'];
+                                    <ul class="dropdown-menu pull-right" style="font-size: 16px;">
+                                                <li><a href="#" ng-click='setLocalBusca(1)'><i class='fa fa-book'></i> por título</a></li>
+                                                <li><a href="#" ng-click='setLocalBusca(2)'><i class='fa fa-male'></i> por autor</a></li>
+                                                <li><a href="#" ng-click='setLocalBusca(3)'><i class='fa fa-building-o'></i> por editora</a></li>
+                                    </ul>
 
-        #EXIBE PRA TER CTZ QUE RECEBEU
-        printf($row['cd_isbn_10_livro']);
-        printf("<br>");
-        printf($row['cd_isbn_13_livro']);
-      }
-    
-    # LIBERA MEMÓRIA DO QUERY
-    mysql_free_result($result);
-
-    $_SESSION["nome"]="Diogo Camilo";
-
-    printf($_SESSION["nome"]);
-    # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
-      $result = mysql_query(
-          "SELECT cd_leitor
-          FROM tb_leitor
-          WHERE nm_leitor = '".$_SESSION["nome"]."'
-          ");
-      
-    # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
-      while ($row = mysql_fetch_assoc($result)) {
-        $cdleitor = $row['cd_leitor'];
-
-        #EXIBE PRA TER CTZ QUE RECEBEU
-        printf ($row['cd_leitor']);
-      }
-    
-    # LIBERA A MEMÓRIA DO QUERY
-    mysql_free_result($result);
-
-    # INSERE NA TABELA LIVRO LEITOR OS VALORES ENCONTRADOS NAS PESQUISAS E ARMAZENADOS NAS VARIAVEIS
-      $vSQL = "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'JA LI')";
-
-    # FAZ A QUERY DA VARIAVEL ACIMA
-      $result = mysql_query($vSQL);
-              if ($result) {
-          echo "Seu cadastro foi realizado com sucesso";
-        }
-      
-      # VARIÁVEIS DA TB_LIVRO_LEITOR
-      # ds_status_leitura, ds_status_livro
-      # tb_livro_cd_isbn_10_livro,  tb_livro_cd_isbn_13_livro
-      # tb_leitor_cd_leitor, tb_leitor_cd_leitor_ID
-
-              ?>
-            <div ng-if="bt_lido_success===true" class="btn btn-success btn-block ng-scope"><i class="fa fa-check"></i></div>
+                                    <button class="btn btn-default btn-xs" type="submit" ng-click="busca('books', 3967192, 0, 1)" style='width:35px;height:29px; box-shadow:none !important; margin-top: 0px !important;'>
+                                                <img src="//skoob-sp.s3.amazonaws.com/css/icon-lupa.png" style="margin:7px 0 4px 0;height:12px;width:12px;" />
+                                    </button>
+                        </span>
             </div>
-            <hr />
-            <a href="querolerCAD.php" style="float:left;" class="btn btn-success">Próximo passo (2 de 3)</a>
             <br clear="all">
-</div>            </div>
+</form>
+<br clear='all'></div>
+<!-- Modal -->
+<div id="myModal" class="modal  hide fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h3 id="myModalLabel">Sincronizar com o Facebook</h3>
+            </div>
+            <div class="modal-body">
+                        <p>Agora você pode sincronizar suas atividades passadas do Skoob no Facebook.</p><p>
+                                    Assim os livros que já foram marcados como "lido" ou "Quero ler" poderão ser visto também por seus amigos do Facebook.</p>
+                        <p>
+                                    <div class='alert alert-warning'>Você precisa estar logado no facebook.
+                         <a href='https://www.facebook.com/dialog/oauth?client_id=252371588132802&redirect_uri=https://www.skoob.com.br/estante/livros/3967192/page:1/?scope=email,user_birthday,read_friendlists,user_likes&modal=1' class='btn btn-success'>Logar utilizando o Facebook</a>                         
+                         </div>                        </p>
+            </div>
+            <div class="modal-footer">
+            </div>
+</div>     <div style="border:0px solid green;">
+          <div data-ng-controller="bookcaseMenu" data-ng-init="menu(3967192, 'books')" style="float: left; width: 160px; border:0px solid red;">
+               <div class="tmp-menu-left" style="padding:0px; margin:5px 0px 0px 0px;">
+                    <ul style="margin:0px; padding:0px; list-style-type:none;">
+                         <li class="lista"><div><i class="icon-table " style="margin:0px 6px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 0, 1)">Todos</a><br></div><div data-ng-class="{'blistaon badge':estante_id == '', 'blista':estante_id !== ''}"><span ng-bind='stats.total'></span></div></li>
+                         <li class="lista"><div><i class="icon-adicionar sk-cor-lido" style="margin:0px 10px 2px 4.5px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 1, 1)">Lido</a></div><div data-ng-class="{'blistaon badge':estante_id === 1, 'blista':estante_id !== 1}"><span ng-bind='stats.lido'></span></div></li>
+                         <li class="lista"><div><i class="icon-adicionar sk-cor-lendo" style="margin:0px 10px 2px 4.5px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 2, 1)">Lendo</a></div><div data-ng-class="{'blistaon badge':estante_id === 2, 'blista':estante_id !== 2}"><span ng-bind='stats.lendo'></span></div></li>
+                         <li class="lista"><div><i class="icon-adicionar sk-cor-vouler" style="margin:0px 10px 2px 4.5px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 3, 1)">Quero ler</a></div><div  data-ng-class="{'blistaon badge':estante_id === 3, 'blista':estante_id !== 3}"><span ng-bind='stats.quero_ler'></span></div></li>
+                         <li class="lista"><div><i class="icon-adicionar sk-cor-relendo" style="margin:0px 10px 2px 4.5px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 4, 1)">Relendo</a></div><div data-ng-class="{'blistaon badge':estante_id === 4, 'blista':estante_id !== 4}"><span ng-bind='stats.relendo'></span></div></li>
+                         <li class="listab"><div><i class="icon-adicionar sk-cor-abandonei" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 5, 1)">Abandonei</a></div><div data-ng-class="{'blistaon badge':estante_id === 5, 'blista':estante_id !== 5}"><span ng-bind='stats.abandonei'></span></div></li>
+                         <li class="lista"><div><i class="icon-favorito sk-cor-favorito" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 8, 1)">Favorito</a></div><div data-ng-class="{'blistaon badge':estante_id === 8, 'blista':estante_id !== 8}"><span ng-bind='stats.favorito'></span></div></li>
+                         <li class="lista"><div><i class="icon-desejado sk-cor-queroler" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 9, 1)">Desejado</a></div><div data-ng-class="{'blistaon badge':estante_id === 9, 'blista':estante_id !== 9}"><span ng-bind='stats.desejado'></span></div></li>
+                         <li class="lista"><div><i class="icon-avaliacao sk-cor-lendo" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 13, 1)">Avaliado</a></div><div data-ng-class="{'blistaon badge':estante_id === 13, 'blista':estante_id !== 13}"><span ng-bind='stats.avaliados'></span></div></li>
+                         <li class="listab"><div><i class="icon-bubble2" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 14, 1)">Resenhado</a></div><div data-ng-class="{'blistaon badge':estante_id === 14, 'blista':estante_id !== 14}"><span ng-bind='stats.resenhados'></span></div></li>
+                         <li class="lista"><div><i class="icon-tenho sk-cor-queroler" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 6, 1)">Tenho</a></div><div data-ng-class="{'blistaon badge':estante_id === 6, 'blista':estante_id !== 6}"><span ng-bind='stats.tenho'></span></div></li>
+                         <li class="lista"><div><i class="icon-troca sk-cor-queroler" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 10, 1)">Troco</a></div><div data-ng-class="{'blistaon badge':estante_id === 10, 'blista':estante_id !== 10}"><span ng-bind='stats.troco'></span></div></li>
+                         <li class="lista"><div><i class="icon-emprestei sk-cor-queroler" style="margin:0px 10px 2px 0px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 11, 1)">Emprestei</a></div><div data-ng-class="{'blistaon badge':estante_id === 11, 'blista':estante_id !== 11}"><span ng-bind='stats.emprestei'></span></div></li>
+                         <li class="lista"><div><i class="icon-meta sk-cor-queroler" style="margin:0px 10px 2px 3px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 12, 1)">Meta de Leitura</a></div><div data-ng-class="{'blistaon badge':estante_id === 12, 'blista':estante_id !== 12}"><span ng-bind='stats.meta'></span></div></li>     
+                         <li class="lista"><div><i class="icon-tablet sk-cor-queroler" style="margin:0px 10px 2px 2px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 7, 1)">Ebook / Digital</a></div><div data-ng-class="{'blistaon badge':estante_id === 7, 'blista':estante_id !== 7}"><span ng-bind='stats.digital'></span></div></li>     
+                         <li class="lista"><div><i class="icon-music sk-cor-queroler" style="margin:0px 10px 2px 1px;"></i><a href="javascript:{}" data-ng-click="estante('books', 3967192, 15, 1)">AudioBook</a></div><div data-ng-class="{'blistaon badge':estante_id === 15, 'blista':estante_id !== 15}"><span ng-bind='stats.audio'></span></div></li>     
+                    </ul>
+               </div>
+               <div style="border:none; margin-top: 8px; text-align:right; color:#333;">
+                                   </div>
+               <div style="font-size:11px; margin-top: 8px; border:none; text-align:right; color:#333;">
+                    Paginômetro: 
+                    <strong>
+                         <span ng-bind="stats.paginometro"></span><br />
+                         <span style="font-size:10px;">
+                              média de páginas: {{stats.media_paginas_lidas}}
+                         </span>
+                    </strong>
+               </div>
+          </div>
+          <div style="width: 780px; float: right; margin-left:0px; border: 0px solid red; margin-top: 3px;">
+               <!-- LIVROS ENCONTRADOS -->
+               <div style="height:30px; border: 0px solid red;">
+     <div style="float:left;margin:0px 0 0 13px;padding-top:5px;font-size:12px;">
+          <div style="font-size:14px; color: #556677; font-weight: bold; border: 0px solid blue; margin-top: 3px;">
+                                    <div data-ng-if="estante_loading" style="float:left;margin:1px 10px 0 0px;"><img src="https://skoob-sp.s3.amazonaws.com/img/v2/base/load-padrao.gif" alt=""></div>
+                     <span ng-if="total" ng-cloak>{{bigTotalItems}} encontrados </span>
+                     <span data-ng-if="total > 36" ng-cloak>| Exibindo {{firstItem}} a {{lastItem}}</span>
+                               </div>
+     </div>
+     <div style="float:right;margin:0px 0 10px 0;" data-ng-if="total > 36" ng-cloak>
+                 <pagination rotate='true' total-items="bigTotalItems" items-per-page="36" ng-model="currentPage" max-size="maxSize" estante_id="estante_id" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pageChanged(tipo, usuario_id, estante_id, currentPage)"></pagination>
+     </div>
+     <br clear="all" />
+</div>               <div data-ng-if="total > 0">
+                    <ul style="list-style: none;">
+                         <li ng-repeat="livro in livros" class="{{formato_class}}">
+                              <div class="clivro" style="position:relative;" ng-mouseover="bt_excluir = true" ng-mouseleave="bt_excluir = false">
+                                                                            <div class="opdel bt-livro-excluir" ng-click="excluir($index, livro.edicao.id)" click-confirm="Deseja excluir da sua estante?"><i class=" icon-trash"></i></div>
+                                         <div class="opadd" style="z-index: 1000;display:none;position:absolute;width:65px;margin:77px 0 0px 2px;"><a href="javascript:{}" ng-click="shelfOpen(livro.edicao.id)" class="btn btn-primary" style="width:65px;padding:2px 0px 0px 0px !important;box-shadow:none !important"><i class="icon-plus" style="font-size:13px;color:#fff;"></i></a></div>
+                                                                            <div class="livro-capa">
+                                        <a href="{{livro.edicao.url}}" ng-show='livro.edicao.url' ng-cloak>
+                                             <div ng-if="livro.tipo">
+                                                  <shelf-mark marktype="livro.tipo"></shelf-mark>
+                                             </div>
+                                             <div ng-if="formato_class_conteudo" class="drop-shadow-left" style="height:103px;">
+                                                  <img ng-src="{{livro.edicao.capa_mini}}" />
+                                             </div>
+                                             <div ng-if="!formato_class_conteudo" class="drop-shadow-left">
+                                                  <img ng-src="{{livro.edicao.capa_mini}}"  tooltip="{{livro.edicao.titulo}}" tooltip-animation='false' />
+                                             </div>
+                                        </a>
+
+                                        <div style='color: #ffcc00;cursor:pointer;margin-left:2px;' ng-if="livro.tipo == 1 || livro.tipo == 5 || livro.tipo == 8">
+                                                                                                <star-rating ratetemp="livro.ranking" type="livro"  idtemp="livro.edicao.id" boxcounter="false" fixed="false" size="small"></star-rating>
+                                                                                           </div>
+                                        <div style='border:0px solid red; width: 100%; margin-top: 5px;' ng-if="livro.tipo == 2">
+                                             <read-progress pagestotal="livro.edicao.paginas" pages="livro.paginas_lidas"></read-progress>
+                                        </div>
+                                   </div>
+                                   <div ng-if="formato_class_conteudo" class="livro-conteudo" ng-cloak>
+                                        <h3>{{livro.edicao.titulo}}</h3>
+                                        <p>{{livro.edicao.subtitulo}} <br />
+                                             {{livro.edicao.autor}} <br />
+                                             {{livro.edicao.editora}}</p>
+                                   </div>
+                              </div>
+                         </li>
+                    </ul>
+                    <br clear="all">
+               </div>
+               <br clear="all">
+               <div style="height:30px; border: 0px solid red;">
+     <div style="float:left;margin:0px 0 0 13px;padding-top:5px;font-size:12px;">
+          <div style="font-size:14px; color: #556677; font-weight: bold; border: 0px solid blue; margin-top: 3px;">
+                         </div>
+     </div>
+     <div style="float:right;margin:0px 0 10px 0;" data-ng-if="total > 36" ng-cloak>
+                 <pagination rotate='true' total-items="bigTotalItems" items-per-page="36" ng-model="currentPage" max-size="maxSize" estante_id="estante_id" class="pagination-sm" boundary-links="true" rotate="false" num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-change="pageChanged(tipo, usuario_id, estante_id, currentPage)"></pagination>
+     </div>
+     <br clear="all" />
+</div>               <!-- NAO ENCONTRADO -->
+               <div data-ng-if="total === 0" style="margin:60px 0px;text-align:center;" ng-cloak><i class="icon-sad" style='font-size:60px;color:#ccc;margin-right:45px;'></i> <br /><br /><br /><br /><br /> Nenhum registro encontrado.</div>
+                         </div>
+          <br clear="all">
+     </div>
+    </div>            </div>
         </div>
 
         <br clear='all'/>
