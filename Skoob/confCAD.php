@@ -1,3 +1,6 @@
+<?php session_start() ?>
+
+
 <!DOCTYPE html>
 <html xmlns='//www.w3.org/1999/xhtml'>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# books: http://ogp.me/ns/books#">
@@ -305,8 +308,8 @@
     <h3 style='font-size:15px;'>Veja abaixo um exemplo de como ficam as atualizações na sua timeline: </h3>
     <img src="https://skoob-sp.s3.amazonaws.com/img/v2/base/timeline_exemplo.jpg" style="margin:5px 0px;" alt=""/>    <h2 style='font-size:15px; color:#999; margin:0px;'>Você pode alterar a opção de enviar para o Facebook sempre que desejar.</h2>
     <hr />
-    <a href="https://www.facebook.com/v2.2/dialog/oauth?client_id=252371588132802&state=df8620e90f60d438db5f365f92e8a9ca&response_type=code&sdk=php-sdk-5.3.1&redirect_uri=https%3A%2F%2Fwww.skoob.com.br%2Fusuario%2Fsugestoes_fb%2F&scope=publish_actions" style="float:left;" class="btn btn-primary">Clique para autorizar</a>
-    <a href="Skoob_lidos.html" style="float:right; display: block; margin-top: 8px;">Não, obrigado</a>
+    <a href="jaliCAD.php" style="float:left;" class="btn btn-primary">Clique para autorizar</a>
+    <a href="jaliCAD.php" style="float:right; display: block; margin-top: 8px;">Não, obrigado</a>
     <br />
 </div>
 <style>
