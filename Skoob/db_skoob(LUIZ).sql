@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `tb_leitor` (
 --
 
 INSERT DELAYED IGNORE INTO `tb_leitor` (`cd_leitor`, `nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `dt_nasc_leitor`, `ds_email_leitor`, `ds_senha_leitor`, `ds_distrito_leitor`) VALUES
-(3, 'Diogo Camilo', 'Camilo', 'M', '1997-01-02', 'diogo@gmail.com', 'rgbs', 'SP', '');
+(3, 'Diogo Camilo', 'Camilo', 'M', '1997-01-02', 'diogo@gmail.com', 'rgbs', 'SP');
 
 -- --------------------------------------------------------
 
