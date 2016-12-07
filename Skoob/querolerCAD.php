@@ -1,12 +1,7 @@
-<?php session_start() ?>
-
-
-
-
           <!DOCTYPE html>
 <html xmlns='//www.w3.org/1999/xhtml'>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# books: http://ogp.me/ns/books#">
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />        <title>Livros que já li - SKOOB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />        <title>Livros que quero ler - SKOOB</title>
                 <meta name="language" content="pt-br"/>
         <meta name="google-site-verification" content="h_F9-djAws40JfpX_W4juzsPjd9YZ2v-s0YvOG-D388"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -51,8 +46,6 @@
     </head>
 
     <body id="ng-app" ng-app="skoob">
-
-
     <div>
         <div id='topo' class='navbar navbar-fixed-top' style='height:48px;'>
       
@@ -303,19 +296,18 @@
             <br clear='all' />
       </div>
 </div>
-
 <div style="margin-top:70px;">        <div style="width:950px;margin:auto;">
                     </div>
 
         <div id='container-full' class=''>
             <div id='corpo' data-ng-controller="mainCtrl as main">
-                <div class="corner8" style="text-align:left; border:#B7D0E6 2px solid; margin:40px 0px; padding:20px;  font-family:trebuchet ms;">
-            <h1 style='font-size:24px; color:#71951E;'>Selecione os livros que você já leu</h1>
-            <i>Listamos os livros mais lidos no momento.</i> Calma! Você não precisa marcar todos agora. :)
+                <div class="corner8" style="text-align:left; border:#B7D0E6 2px solid; margin:40px 0px; padding:20px 25px;  font-family:trebuchet ms;">
+            <h1 style='font-size:24px; color:#71951E;'>(Quero ler) Selecione os livros que você deseja ler futuramente</h1>
+            <i>Listamos abaixo os livros que as pessoas mais quere ler no momento. </i> Você já sabe, não precisa marcar todos agora. ;)
             <br />
             <hr />
             <div style='border:green 0px solid; margin:0px; padding:0px; width:920px;'>
-            <?php
+<?php
                 @require('conexaobd.php');
 
                 $result = mysql_query("SELECT cd_isbn_10_livro, cd_isbn_13_livro, ds_url_capa_livro FROM tb_livro");
@@ -326,7 +318,7 @@
                                     <add-book shelf-id='1'  book-id='323291'></add-book>
                                     <form action='#' method='post'>
                                     <input type='hidden' name='isbn' value=". $row['cd_isbn_10_livro']."/>
-                                    <input type='submit' class='btn btn-default btn-block ng-scope' value='Já li'
+                                    <input type='submit' class='btn btn-default btn-block ng-scope' value='Quero ler'
                                     data-ng-click='add()'>
                                     </form>
                             </div>");
@@ -381,7 +373,7 @@
     mysql_free_result($result);
 
     # INSERE NA TABELA LIVRO LEITOR OS VALORES ENCONTRADOS NAS PESQUISAS E ARMAZENADOS NAS VARIAVEIS
-      $vSQL = "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'JA LI')";
+      $vSQL = "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'QUERO LER')";
 
     # FAZ A QUERY DA VARIAVEL ACIMA
       $result = mysql_query($vSQL);
@@ -395,10 +387,11 @@
       # tb_leitor_cd_leitor, tb_leitor_cd_leitor_ID
 
               ?>
-            <div ng-if="bt_lido_success===true" class="btn btn-success btn-block ng-scope"><i class="fa fa-check"></i></div>
+                                      </div>
+                                                              <br  clear='all'>
             </div>
             <hr />
-            <a href="querolerCAD.php" style="float:left;" class="btn btn-success">Próximo passo (2 de 3)</a>
+            <a href="estante.html" style="float:left;" class="btn btn-success">Finalizar e ver minha estante (3 de 3)</a>
             <br clear="all">
 </div>            </div>
         </div>
