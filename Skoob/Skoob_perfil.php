@@ -1,10 +1,23 @@
 <?php 
   session_start();
+  mysql_connect("localhost","root","") or
+    die("Não foi possível conectar:" . mysql_error());
+  mysql_select_db("db_skoob");
+  $nome = $_SESSION["nome"];
+
+  $query = mysql_query("SELECT * FROM tb_leitor WHERE nm_leitor = '$nome'");
+  $consulta = mysql_fetch_array($query);
+  if ($consulta['ds_img_leitor'] == null){
+    $_SESSION["foto"] = "img/sem-face.gif";
+  }else {
+    $_SESSION["foto"] = $consulta['ds_img_leitor'];
+  }
+
 ?>
 <!DOCTYPE html>
 <html xmlns='//www.w3.org/1999/xhtml'>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# books: http://ogp.me/ns/books#">
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />        
+        <meta http-equiv="Content-Type" content="text/html;  charset=utf-8" />        
         <title><?php print($_SESSION["nome"])?> - Perfil - SKOOB</title>
         <meta name="language" content="pt-br"/>
         <meta name="google-site-verification" content="h_F9-djAws40JfpX_W4juzsPjd9YZ2v-s0YvOG-D388"/>
@@ -249,7 +262,7 @@
                      <ul class="nav nav-pills" style='margin: 0px;'>
                           <li class="dropdown">
                                <a href="#" id="topo-menu-conta" class="dropdown-toggle">
-                                    <img src="https://cache.skoob.com.br/local/images//w-ODIMy-3w2VprkXd_dMMSy8r7Q=/27x27/center/top/smart/filters:format(jpeg)/https://skoob.s3.amazonaws.com/usuarios/3712387/3712387SK1471467527G.jpg" style="margin-right:10px; float:left; padding:0px;" width="27" height="27" class="round-4" alt=""/>                                    <b class="caret"></b>
+                                    <img src="<?php print($_SESSION["foto"])?>" style="margin-right:10px; float:left; padding:0px;" width="27" height="27" class="round-4" alt=""/>                                    <b class="caret"></b>
                                </a>
                                <ul id="topo-menu-conta-hover" class="dropdown-menu">
                                     <li>
@@ -311,8 +324,8 @@
 
      
 <div id="perfil-usuario-foto" ng-mouseover='perfil_foto_trocar = true'  ng-mouseleave='perfil_foto_trocar = false' style="border:none; height: 173px; width: 173px; overflow: hidden; background-color:transparent; -moz-border-radius: 5px; border-radius: 5px;" >
-                               <a href='/usuario/editar_foto/' ng-if='perfil_foto_trocar' id='perfil-usuario-foto-troca' ng-cloak><i class='icon-camera'></i> Mudar foto</a>  
-                               <img src="https://cache.skoob.com.br/local/images//mVi1Ll69DTYWHh3j3GDf1LQJJHg=/170x170/center/top/smart/filters:format(jpeg)/https://skoob.s3.amazonaws.com/usuarios/3712387/3712387SK1471467527G.jpg" style='margin-right:10px; padding:0px; border:none;' width='173' height='173'>
+                               <a href='/Skoob/editar_foto.php/' ng-if='perfil_foto_trocar' id='perfil-usuario-foto-troca' ng-cloak><i class='icon-camera'></i> Mudar foto</a>  
+                               <img src="<?php print($_SESSION["foto"])?>" style='margin-right:10px; padding:0px; border:none;' width='173' height='173'>
 </div>
 
               <div id="b-usermenu-icons-top" data-ng-controller="userToolButtons">

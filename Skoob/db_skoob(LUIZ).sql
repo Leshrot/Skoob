@@ -186,6 +186,7 @@ CREATE TABLE IF NOT EXISTS `tb_leitor` (
   `ds_email_leitor` varchar(40) DEFAULT NULL,
   `ds_senha_leitor` varchar(16) DEFAULT NULL,
   `ds_distrito_leitor` char(2) DEFAULT NULL,
+  `ds_img_leitor` varchar(200) NOT NULL,
   PRIMARY KEY (`cd_leitor`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -194,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `tb_leitor` (
 --
 
 INSERT DELAYED IGNORE INTO `tb_leitor` (`cd_leitor`, `nm_leitor`, `nm_apelido_leitor`, `ds_sexo_leitor`, `dt_nasc_leitor`, `ds_email_leitor`, `ds_senha_leitor`, `ds_distrito_leitor`) VALUES
-(3, 'Diogo Camilo', 'Camilo', 'M', '1997-01-02', 'diogo@gmail.com', 'rgbs', 'SP');
+(3, 'Diogo Camilo', 'Camilo', 'M', '1997-01-02', 'diogo@gmail.com', 'rgbs', 'SP', '');
 
 -- --------------------------------------------------------
 
