@@ -121,6 +121,7 @@
     $is10='';
     if(isset($_POST['isbn'])){
       $is10 = $_POST['isbn'];
+      $is10 = substr($is10, 0, -1);
     }
 
     # PROCURA OS VALORES DO ISBN10 E 13 DO LIVRO CLICADO
@@ -158,7 +159,22 @@
     # LIBERA A MEMÓRIA DO QUERY
     mysql_free_result($result);
 
+    printf($_SESSION["nome"]);
+    printf("<br>");
+
     # INSERE NA TABELA LIVRO LEITOR OS VALORES ENCONTRADOS NAS PESQUISAS E ARMAZENADOS NAS VARIAVEIS
+
+    #ESSE TRECHO VERIFICA SE O ISBN E O NOME JA ESTAO NA TABELA LIVRO LEITOR
+    $result = mysql_query("SELECT * FROM tb_livro_leitor
+      WHERE tb_livro_cd_isbn_10_livro = '".$isbn10."' 
+      AND 
+      tb_leitor_cd_leitor = '".$_SESSION["nome"]."' 
+      ");
+    $result = mysql_num_rows($result); 
+    if($result >= 1){ #VERIFICA SE TEM 1 OU MAIS LINHAS NA TABELA LIVRO LEITOR
+    echo "Livro já selecionado";
+
+    } else { # DÁ INSERT NA TABELA LIVRO LEITOR
     if(isset($cdleitor,$isbn10,$isbn13)){
       $vSQL = "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'JA LI')";
     }
@@ -168,7 +184,7 @@
               if ($result) {
           echo "Seu cadastro foi realizado com sucesso";
         }
-    
+    }
     
       # VARIÁVEIS DA TB_LIVRO_LEITOR
       # ds_status_leitura, ds_status_livro
