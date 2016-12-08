@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `tb_editora` (
 --
 
 CREATE TABLE IF NOT EXISTS `tb_leitor` (
-  `cd_leitor` int(11) NOT NULL,
+  `cd_leitor` int(11) NOT NULL AUTO_INCREMENT,
   `nm_leitor` varchar(40) DEFAULT NULL,
   `nm_apelido_leitor` varchar(40) DEFAULT NULL,
   `ds_sexo_leitor` char(1) DEFAULT NULL,
