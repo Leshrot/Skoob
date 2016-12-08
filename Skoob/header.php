@@ -1,6 +1,6 @@
 <?php 
   session_start();
-  mysql_connect("localhost","root","") or
+  @mysql_connect("localhost","root","") or
     die("Não foi possível conectar:" . mysql_error());
   mysql_select_db("db_skoob");
   $nome = $_SESSION["nome"];
@@ -13,7 +13,7 @@
 if ($consulta['ds_img_leitor'] == null){
     $_SESSION["foto"] = "img/sem-face.gif";
   }else {
-    $_SESSION["foto"] = $consulta['ds_img_leitor'];
+    $_SESSION["foto"] = "img/leitor/".$consulta['ds_img_leitor'];
   }
 ?>
 
