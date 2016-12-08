@@ -28,8 +28,8 @@ if ($consulta['ds_img_leitor'] == null){
           <div id='topo' class='navbar navbar-fixed-top' style='height:48px;'>
 
         <div id="topoInterno" class="container" style="">
-              <a href="/Skoob">
-                    <img src="https://cache.skoob.com.br/s3/skoob-sp/img/v2/base/skoob-logo-topo.gif" class="logo" alt="logo Skoob" title="logo Skoob" width="109" height="33"/>            </a>
+              <a href="home.php">
+                    <img src="img/skoob-logo-topo.gif" class="logo" alt="logo Skoob" title="logo Skoob" width="109" height="33"/>            </a>
 
               <div id='tbusca' data-ng-controller="SearchCtrl" data-ng-mouseleave="leave = true">
       <form  class="form-inline" action="/livro/lista/" method="post" id="topo-menu-search">
