@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html xmlns='//www.w3.org/1999/xhtml'>
     <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# books: http://ogp.me/ns/books#">
-        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />        <title>Livros que já li - SKOOB</title>
-                <meta name="language" content="pt-br"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />        
+        <title>Livros que já li - SKOOB</title>
+        <meta name="language" content="pt-br"/>
         <meta name="google-site-verification" content="h_F9-djAws40JfpX_W4juzsPjd9YZ2v-s0YvOG-D388"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta name="apple-itunes-app" content="app-id=904670263"/>
@@ -104,14 +105,13 @@
     # LIBERA MEMÓRIA DO QUERY
     mysql_free_result($result);
 
-    $_SESSION["nome"]="Diogo Camilo";
-
     printf($_SESSION["nome"]);
     # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
+      $nome = $_SESSION["nome"];
       $result = mysql_query(
           "SELECT cd_leitor
           FROM tb_leitor
-          WHERE nm_leitor = '".$_SESSION["nome"]."'
+          WHERE nm_leitor = '$nome'
           ");
       
     # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
