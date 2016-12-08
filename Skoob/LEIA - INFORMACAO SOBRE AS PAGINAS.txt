@@ -1,4 +1,4 @@
-URGENTE:
+﻿URGENTE:
 // CADASTRO USUÁRIO E LOGIN LEITOR == BRUNO E DIOGO
 jaliCAD.html = Pergunta os livros que você já leu
 querolerCAD = Pergunta os livros que você quer ler
@@ -45,7 +45,6 @@ FINALIZADO
 
 
 
-
 // BANCO DE DADOS
 
 CRIAR UMA DB CHAMADA db_skoob e importar o arquivo MAIS RECENTE
@@ -56,3 +55,7 @@ ALTERAR O BANCO DE DADOS SE NECESSÁRIO E EXPORTAR A TABELA QUE VOCÊS ALTERAREM
 #BRUNO NISTICO
 __________________________________________________
 COMENTAR QUALQUER ARQUIVO NOVO
+
+
+INDEX AGORA É PHP!!!
+HEADER PERMITE SAIR!
