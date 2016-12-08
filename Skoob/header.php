@@ -236,7 +236,7 @@ if ($consulta['ds_img_leitor'] == null){
                                       <li>
                                            <a href="/contatos/fbjs/3967192" title="Convidar Amigos"><i class='icon-amigos icon-align' style='margin-right:5px;'></i> Convidar Amigos</a>                                    </li>
                                       <li>
-                                           <a href="/login/sair/" title="Sair"><i class='icon-switch icon-align' style='margin-right:5px;'></i> Sair</a>                                    </li>
+                                           <a href="index.php" title="Sair"><i class='icon-switch icon-align' style='margin-right:5px;'></i> Sair</a>                                    </li>
                                  </ul>
                             </li>
                        </ul>
