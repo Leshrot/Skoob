@@ -1,0 +1,61 @@
+﻿URGENTE:
+// CADASTRO USUÁRIO E LOGIN LEITOR == BRUNO E DIOGO
+jaliCAD.html = Pergunta os livros que você já leu
+querolerCAD = Pergunta os livros que você quer ler
+
+verificarcookie.php = verifica se os cookies estão ativos.
+
+
+// PERFIL LEITOR - LOGADO == DIOGO E WELTON
+Perfil = página do perfil
+editar_foto = Recebe a foto do perfil e altera
+(o essencial é fazer possível editar a foto, e a foto aparecer no canto direito da navbar)
+
+______________________________________________________________________
+TRABALHAR DEPOIS:
+
+// ESTANTE E MODAL - LOGADO == (PENULTIMO PONTO A SE TRABALHAR)
+
+estante.html : ***FAZER SÓ A ABA ESTANTE FUNCIONAR***  [Todos] até [Troco], IGNORAR DE: EMPRESTEI EM DIANTE
+FAZER O MODAL AO CLICAR NUM LIVRO (COM A TELA "EDITAR PARA TROCA" APENAS) 
+
+
+
+________________________________________________________________________________
+FINALIZADO
+
+// CADASTRO USUÁRIO E LOGIN LEITOR == BRUNO E DIOGO 
+* convite.php = Cadastra os dados do usuário
+* validarCAD.php = VALIDA O CADASTRO.
+* confCAD.html = Pergunta se você quer postar no facebook os livros que leu
+* login.html = onde o usuário preenche os dados de login
+* validar.php = valida o login.
+
+
+
+
+
+// PÁGINA LIVRO - LOGADO == LUIS, BETO
+* livro.html = página que apresenta o livro para quem está logado
+
+// PESQUISAR LIVRO == BRUNO
+* listarfuncional.php
+
+
+
+
+
+// BANCO DE DADOS
+
+CRIAR UMA DB CHAMADA db_skoob e importar o arquivo MAIS RECENTE
+ALTERAR O BANCO DE DADOS SE NECESSÁRIO E EXPORTAR A TABELA QUE VOCÊS ALTERAREM EM .SQL PARA O GIT.
+
+
+
+#BRUNO NISTICO
+__________________________________________________
+COMENTAR QUALQUER ARQUIVO NOVO
+
+
+INDEX AGORA É PHP!!!
+HEADER PERMITE SAIR!
