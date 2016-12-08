@@ -115,12 +115,13 @@
           ");
       
     # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
-      while ($row = mysql_fetch_assoc($result)) {
-        $cdleitor = $row['cd_leitor'];
+      $cdleitor = $consulta['cd_leitor'];
+      /*while ($row = mysql_fetch_assoc($result)) {
+        
 
         #EXIBE PRA TER CTZ QUE RECEBEU
         printf ($row['cd_leitor']);
-      }
+      }*/
     
     # LIBERA A MEMÓRIA DO QUERY
     mysql_free_result($result);
