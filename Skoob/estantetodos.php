@@ -47,28 +47,6 @@
     </head>
 
     <body id="ng-app" ng-app="skoob">
-    <?php
-        @require('conexaobd.php');
-                $nome = $_SESSION["nome"];
-
-                $query = "select distinct l.nm_livro, l.ds_img_edicao from tb_livro l 
-                            inner join tb_livro_leitor lt
-                            on l.cd_isbn_10_livro = lt.tb_livro_cd_isbn_10_livro
-                            and l.cd_isbn_13_livro = lt.tb_livro_cd_isbn_13_livro
-                            where lt.tb_leitor_cd_leitor = (select cd_leitor from tb_leitor
-                                                            where nm_leitor = '".$nome."') ";
-                #SELECT E CONTAGEM DOS LIVROS DA ESTANTE DO USUARIO
-                $result = @mysql_query($query);
-                $numTotal = mysql_num_rows($result);
-
-                #SELECT E CONTAGEM DOS LIVROS PARA LER DA ESTANTE DO USUARIO
-                $resultQueroLer = mysql_query($query."AND ds_status_leitura = 'QUERO LER';");
-                $numQueroLer = mysql_num_rows($resultQueroLer);
-
-                #SELECT E CONTAGEM DOS LIVROS LIDOS DA ESTANTE DO USUARIO
-                $resultLido = mysql_query($query."AND ds_status_leitura = 'JA LI';");
-                $numLido = mysql_num_rows($resultLido);
-    ?>
     
 <div style="margin-top:104px">        <div style="width:950px;margin:auto;">
                     </div>
@@ -148,9 +126,9 @@
           <div data-ng-controller="bookcaseMenu" data-ng-init="menu(3967192, 'books')" style="float: left; width: 160px; border:0px solid red;">
                <div class="tmp-menu-left" style="padding:0px; margin:5px 0px 0px 0px;">
                     <ul style="margin:0px; padding:0px; list-style-type:none;">
-                         <li class="lista"><div><i class="icon-table " style="margin:0px 6px 2px 2px;"></i><a href="estantetodos.php" data-ng-click="estante('books', 3967192, 0, 1)">Todos</a><br></div><div data-ng-class="{'blistaon badge':estante_id == '', 'blista':estante_id !== ''}"><span ng-bind='stats.total'></span><?php echo($numTotal);?></div></li>
-                         <li class="lista"><div><i class="icon-adicionar sk-cor-lido" style="margin:0px 10px 2px 4.5px;"></i><a href="estantelido.php" data-ng-click="estante('books', 3967192, 1, 1)">Lido</a></div><div data-ng-class="{'blistaon badge':estante_id === 1, 'blista':estante_id !== 1}"><span ng-bind='stats.lido'></span><?php echo($numLido);?></div></li>
-                         <li class="lista"><div><i class="icon-adicionar sk-cor-vouler" style="margin:0px 10px 2px 4.5px;"></i><a href="estantequeroler.php" data-ng-click="estante('books', 3967192, 3, 1)">Quero ler</a></div><div  data-ng-class="{'blistaon badge':estante_id === 3, 'blista':estante_id !== 3}"><span ng-bind='stats.quero_ler'></span><?php echo($numQueroLer);?></div></li>     
+                         <li class="lista"><div><i class="icon-table " style="margin:0px 6px 2px 2px;"></i><a href="estantetodos.php" data-ng-click="estante('books', 3967192, 0, 1)">Todos</a><br></div><div data-ng-class="{'blistaon badge':estante_id == '', 'blista':estante_id !== ''}"><span ng-bind='stats.total'></span></div></li>
+                         <li class="lista"><div><i class="icon-adicionar sk-cor-lido" style="margin:0px 10px 2px 4.5px;"></i><a href="estantelido.php" data-ng-click="estante('books', 3967192, 1, 1)">Lido</a></div><div data-ng-class="{'blistaon badge':estante_id === 1, 'blista':estante_id !== 1}"><span ng-bind='stats.lido'></span></div></li>
+                         <li class="lista"><div><i class="icon-adicionar sk-cor-vouler" style="margin:0px 10px 2px 4.5px;"></i><a href="estantequeroler.php" data-ng-click="estante('books', 3967192, 3, 1)">Quero ler</a></div><div  data-ng-class="{'blistaon badge':estante_id === 3, 'blista':estante_id !== 3}"><span ng-bind='stats.quero_ler'></span></div></li>     
                     </ul>
                </div>
                <div style="border:none; margin-top: 8px; text-align:right; color:#333;">
@@ -169,18 +147,55 @@
                <!-- LIVROS ENCONTRADOS -->
                <div style="height:30px; border: 0px solid red;">
                <div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
+<?php
+                @require('conexaobd.php');
 
-            <?php
-                
-                if(mysql_num_rows($result) > 0){
-                    while ($row = mysql_fetch_assoc($result)) {
-                      echo ("<div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
-                                  <img src=".$row['ds_img_edicao']." width='100' height='145' style='margin-bottom: 5px;'>
-                                        <add-book shelf-id='1'  book-id='323291'></add-book>
-                                </div>");
-                    }
+    # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
+      $result = mysql_query(
+          "SELECT cd_leitor
+          FROM tb_leitor
+          WHERE nm_leitor = '".$_SESSION["nome"]."'
+          ");
+      
+
+    # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
+      while ($row = mysql_fetch_assoc($result)) {
+        $cdleitor = $row['cd_leitor'];
+
+      }
+      mysql_free_result($result);
+      
+      # PEGA DA TABELA LIVRO LEITOR O CODIGO DO LEITOR
+      $result = mysql_query($vSQL = "SELECT * FROM tb_livro_leitor
+      WHERE tb_leitor_cd_leitor = '".$cdleitor."' ");
+
+      $isbns='';
+      while ($row = mysql_fetch_assoc($result)) {
+        $isbns .= $row['tb_livro_cd_isbn_10_livro'].",";
+      }
+
+      $isin = "(";
+      $isin .= substr($isbns, 0, -1);
+      $isin .= ")";
+
+      printf($isin);
+
+      mysql_free_result($result);
+
+      $result = mysql_query("SELECT * FROM tb_livro
+                  WHERE cd_isbn_10_livro IN ".$isin." ");
+
+      # PREENCHE OS ISBNs ENCONTRADOS
+      while ($row = mysql_fetch_assoc($result)) {
+
+                while ($row = mysql_fetch_assoc($result)) {
+                  echo ("<div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
+                              <img src=".$row['ds_url_capa_livro']." width='100' height='145' style='margin-bottom: 5px;'>
+                                    <add-book shelf-id='1'  book-id='323291'></add-book>
+                            </div>");
                 }
-            ?>
+}
+?>
 
 
 
