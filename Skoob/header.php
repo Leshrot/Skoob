@@ -32,7 +32,7 @@ if ($consulta['ds_img_leitor'] == null){
                     <img src="img/skoob-logo-topo.gif" class="logo" alt="logo Skoob" title="logo Skoob" width="109" height="33"/>            </a>
 
               <div id='tbusca' data-ng-controller="SearchCtrl" data-ng-mouseleave="leave = true">
-      <form  class="form-inline" action="/livro/lista/" method="post" id="topo-menu-search">
+      <form  class="form-inline" action="listarfuncional.php" method="post" id="topo-menu-search">
           <span data-ng-cloak  data-ng-show="search_total > 0" class="busca-loading-container" data-ng-bind="search_total | numberDecimal"></span>
           <div data-ng-cloak data-ng-show="search_loading" id='suggestions_loadingmessage'>
               <img src='//skoob-sp.s3.amazonaws.com/img/v2/base/load-padrao.gif' alt="loading">
@@ -92,7 +92,7 @@ if ($consulta['ds_img_leitor'] == null){
                   <br clear="all">
               </li>
               <li data-ng-cloak>
-                  <form action="/livro/lista" method='post'>
+                  <form action="listarfuncional.php" method='post'>
                       <input type='hidden' name='data[Busca][tag]' value='"{{busca}}"' ng-cloack />
                       <input type='hidden' name='data[Busca][tipo]' value='livro' />
                       <button type='submit'>Ver todos os (<span data-ng-bind="search_total | numberDecimal" ng-cloack></span>) resultados</button>
