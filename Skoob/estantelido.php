@@ -165,7 +165,8 @@
       
       # PEGA DA TABELA LIVRO LEITOR O CODIGO DO LEITOR
       $result = mysql_query($vSQL = "SELECT * FROM tb_livro_leitor
-      WHERE tb_leitor_cd_leitor = '".$cdleitor."' ");
+      WHERE tb_leitor_cd_leitor = '".$cdleitor."'
+      AND ds_status_leitura = 'JA LI' ");
 
       $isbns='';
       while ($row = mysql_fetch_assoc($result)) {
