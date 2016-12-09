@@ -196,7 +196,7 @@
                                                               <br  clear='all'>
             </div>
             <hr />
-            <a href="estante.html" style="float:left;" class="btn btn-success">Finalizar e ver minha estante (3 de 3)</a>
+            <a href="estantetodos.php" style="float:left;" class="btn btn-success">Finalizar e ver minha estantetodos phpe 3)</a>
             <br clear="all">
 </div>            </div>
         </div>
@@ -212,7 +212,7 @@
                         <div class="col-md-6 hidden-sm hidden-xs clearfix about">
                                 <br />
                                 <img src="https://cache.skoob.com.br/s3/skoob-sp/img/v2/logo-footer.png" class="logo-footer" style="margin-bottom: 29px;" alt=""/>                                <div class="brief" style="width: 380px; border:0px solid red; font-size: 14px;">
-                                        Somos a maior rede social do Brasil 100% focada em leitores. Funcionamos como uma estante virtual onde você pode colocar os livros que já leu, como aqueles que ainda deseja ler.
+                                        Somos a maior rede social do Brasil 100% focada em leitores. Funcionamos como uma estantetodos phpual onde você pode colocar os livros que já leu, como aqueles que ainda deseja ler.
                                         Compartilhe suas opiniões com seus amigos... <a href='/inicio/quem_somos'>Leia mais</a>.
                                 </div>
                         </div>
