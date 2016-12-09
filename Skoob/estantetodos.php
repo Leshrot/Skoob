@@ -147,17 +147,55 @@
                <!-- LIVROS ENCONTRADOS -->
                <div style="height:30px; border: 0px solid red;">
                <div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
+<?php
+                @require('conexaobd.php');
 
-<!-- aqui insere os livros --> 
-<div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
-                            <img src="img/livro/CONTOS_PECULIARES.jpg" width='100' height='145' style='margin-bottom: 5px;'>
+    # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
+      $result = mysql_query(
+          "SELECT cd_leitor
+          FROM tb_leitor
+          WHERE nm_leitor = '".$_SESSION["nome"]."'
+          ");
+      
+
+    # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
+      while ($row = mysql_fetch_assoc($result)) {
+        $cdleitor = $row['cd_leitor'];
+
+      }
+      mysql_free_result($result);
+      
+      # PEGA DA TABELA LIVRO LEITOR O CODIGO DO LEITOR
+      $result = mysql_query($vSQL = "SELECT * FROM tb_livro_leitor
+      WHERE tb_leitor_cd_leitor = '".$cdleitor."' ");
+
+      $isbns='';
+      while ($row = mysql_fetch_assoc($result)) {
+        $isbns .= $row['tb_livro_cd_isbn_10_livro'].",";
+      }
+
+      $isin = "(";
+      $isin .= substr($isbns, 0, -1);
+      $isin .= ")";
+
+      printf($isin);
+
+      mysql_free_result($result);
+
+      $result = mysql_query("SELECT * FROM tb_livro
+                  WHERE cd_isbn_10_livro IN ".$isin." ");
+
+      # PREENCHE OS ISBNs ENCONTRADOS
+      while ($row = mysql_fetch_assoc($result)) {
+
+                while ($row = mysql_fetch_assoc($result)) {
+                  echo ("<div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
+                              <img src=".$row['ds_url_capa_livro']." width='100' height='145' style='margin-bottom: 5px;'>
                                     <add-book shelf-id='1'  book-id='323291'></add-book>
-                                    <div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
-                            <img src="img/livro/CONTOS_PECULIARES.jpg" width='100' height='145' style='margin-bottom: 5px;'>
-                                    <add-book shelf-id='1'  book-id='323291'></add-book>
-                                    <div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
-                            <img src="img/livro/CONTOS_PECULIARES.jpg" width='100' height='145' style='margin-bottom: 5px;'>
-                                    <add-book shelf-id='1'  book-id='323291'></add-book>
+                            </div>");
+                }
+}
+?>
 
 
 
