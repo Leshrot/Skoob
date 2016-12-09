@@ -228,7 +228,7 @@ if ($consulta['ds_img_leitor'] == null){
                                       <li>
                                            <a href="Skoob_perfil.php" title="Meu Perfil"><i class='icon-amigo icon-align' style='margin-right:5px;'></i> Meu Perfil</a>                                    </li>
                                       <li>
-                                           <a href="estante.php" title="Minha Estante"><i class='icon-adicionar icon-align' style='margin-right:5px;'></i> Minha estante</a>                                    </li>
+                                           <a href="estantetodos.php" title="Minha Estante"><i class='icon-adicionar icon-align' style='margin-right:5px;'></i> Minha estante</a>                                    </li>
                                       <li>
                                            <a href="/usuario/fotos/3967192" title="Minhas Fotos"><i class='icon-camera icon-align' style='margin-right:5px;'></i> Minhas Fotos</a>                                    </li>
                                       <li>
