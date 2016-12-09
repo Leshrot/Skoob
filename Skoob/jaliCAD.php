@@ -63,133 +63,116 @@
             <?php
                 @require('conexaobd.php');
 
-    # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
-      $result = mysql_query(
-          "SELECT cd_leitor
-          FROM tb_leitor
-          WHERE nm_leitor = '".$_SESSION["nome"]."'
-          ");
-      
+              $query = "SELECT distinct cd_isbn_10_livro, cd_isbn_13_livro, ds_img_edicao FROM tb_livro
+                            WHERE cd_isbn_10_livro not in 
+                                  (select lt.tb_livro_cd_isbn_10_livro
+                                         from tb_livro_leitor as lt 
+                                         where lt.ds_status_leitura = 'JA LI' 
+                                         AND lt.tb_leitor_cd_leitor = (select cd_leitor from tb_leitor 
+                                                                       where nm_leitor = '".$_SESSION['nome']."'))
+                            AND cd_isbn_13_livro not in 
+                                  (select lt.tb_livro_cd_isbn_13_livro
+                                         from tb_livro_leitor as lt 
+                                         where lt.ds_status_leitura = 'JA LI' 
+                                         AND lt.tb_leitor_cd_leitor = (select cd_leitor from tb_leitor 
+                                                                       where nm_leitor = '".$_SESSION['nome']."'));";
 
-    # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
-      while ($row = mysql_fetch_assoc($result)) {
-        $cdleitor = $row['cd_leitor'];
-
-      }
-      mysql_free_result($result);
-      
-      # PEGA DA TABELA LIVRO LEITOR O CODIGO DO LEITOR
-      $result = mysql_query($vSQL = "SELECT * FROM tb_livro_leitor
-      WHERE tb_leitor_cd_leitor = '".$cdleitor."' ");
-
-      $isbns ='';
-      # PREENCHE OS ISBNs ENCONTRADOS
-      while ($row = mysql_fetch_assoc($result)) {
-        $isbns .= $row['tb_livro_cd_isbn_10_livro'].",";
-      }
-
-      $notin = "(";
-      $notin .= substr($isbns, 0, -1);
-      $notin .= ")";
-      printf($notin);
-
-                mysql_free_result($result);
-
-                if ($notin == "()"){
-                  $result = mysql_query("SELECT cd_isbn_10_livro, cd_isbn_13_livro, ds_url_capa_livro FROM tb_livro");
-                } else {
-                    $result = mysql_query("SELECT cd_isbn_10_livro, cd_isbn_13_livro, ds_url_capa_livro FROM tb_livro
-                  WHERE cd_isbn_10_livro NOT IN ".$notin." ");
-                }
+                $result = mysql_query($query);
 
                 while ($row = mysql_fetch_assoc($result)) {
                   echo ("<div style='border:0px solid red; float:left; margin: 0px 13px 15px 0px;'>
-                              <img src=".$row['ds_url_capa_livro']." width='100' height='145' style='margin-bottom: 5px;'>
+                              <img src=".$row['ds_img_edicao']." width='100' height='145' style='margin-bottom: 5px;'>
                                     <add-book shelf-id='1'  book-id='323291'></add-book>
                                     <form action='#' method='post'>
                                     <input type='hidden' name='isbn' value=". $row['cd_isbn_10_livro']."/>
-                                    <input type='submit' class='btn btn-default btn-block ng-scope' value='Já li'
+                                    <input type='submit' name='submit' class='btn btn-default btn-block ng-scope' value='Já li'
                                     data-ng-click='add()'>
                                     </form>
                             </div>");
                 }
     
-    # LIBERA MEMÓRIA DO QUERY
-    mysql_free_result($result);
+          # LIBERA MEMÓRIA DO QUERY
+          mysql_free_result($result);
 
-    # PREENCHE O IS10 COM O VALOR DO ISBN DO LIVRO QUE FOR CLICADO
-    $is10='';
-    if(isset($_POST['isbn'])){
-      $is10 = $_POST['isbn'];
-      $is10 = substr($is10, 0, -1);
-    }
+          if(isset($_POST['submit'])){
+              # PREENCHE O IS10 COM O VALOR DO ISBN DO LIVRO QUE FOR CLICADO
+              $is10='';
+              if(isset($_POST['isbn'])){
+                $is10 = $_POST['isbn'];
+                $is10 = substr($is10, 0, -1);
+              }
 
-    # PROCURA OS VALORES DO ISBN10 E 13 DO LIVRO CLICADO
-    $result = mysql_query(
-          "SELECT cd_isbn_10_livro, cd_isbn_13_livro
-          FROM tb_livro
-          WHERE cd_isbn_10_livro = '".$is10."'
-          ");
+              # PROCURA OS VALORES DO ISBN10 E 13 DO LIVRO CLICADO
+              $result = mysql_query(
+                    "SELECT cd_isbn_10_livro, cd_isbn_13_livro
+                    FROM tb_livro
+                    WHERE cd_isbn_10_livro = '".$is10."'
+                    ");
 
 
-    # PREENCHE AS VARIÁVEIS ISBN10 E ISBN13 COM O VALOR DOS ISBN 10 E 13 ENCONTRADOS
+              # PREENCHE AS VARIÁVEIS ISBN10 E ISBN13 COM O VALOR DOS ISBN 10 E 13 ENCONTRADOS
 
-      while ($row = mysql_fetch_assoc($result)) {
-        $isbn10 = $row['cd_isbn_10_livro'];
-        $isbn13 = $row['cd_isbn_13_livro'];
-        printf($isbn10);
-      }
-    
-    # LIBERA MEMÓRIA DO QUERY
-    mysql_free_result($result);
+                while ($row = mysql_fetch_assoc($result)) {
+                  $isbn10 = $row['cd_isbn_10_livro'];
+                  $isbn13 = $row['cd_isbn_13_livro'];
+                  //printf($isbn10);
+                }
+              
+              # LIBERA MEMÓRIA DO QUERY
+              mysql_free_result($result);
 
-    # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
-      $result = mysql_query(
-          "SELECT cd_leitor
-          FROM tb_leitor
-          WHERE nm_leitor = '".$_SESSION["nome"]."'
-          ");
-      
+              # PROCURA O CODIGO DO LEITOR PELO NOME DO LEITOR DA SESSÃO
+                $result = mysql_query(
+                    "SELECT cd_leitor
+                    FROM tb_leitor
+                    WHERE nm_leitor = '".$_SESSION["nome"]."'
+                    ");
+                
 
-    # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
-      while ($row = mysql_fetch_assoc($result)) {
-        $cdleitor = $row['cd_leitor'];
-      }
-    
-    # LIBERA A MEMÓRIA DO QUERY
-    mysql_free_result($result);
+              # PREENCHE O CODIGO DO LEITOR COM O VALOR ENCONTRADO
+                while ($row = mysql_fetch_assoc($result)) {
+                  $cdleitor = $row['cd_leitor'];
+                }
+              
+              # LIBERA A MEMÓRIA DO QUERY
+              mysql_free_result($result);
 
-    printf($_SESSION["nome"]);
-    printf("<br>");
+              //printf($_SESSION["nome"]);
+              //printf("<br>");
 
-    # INSERE NA TABELA LIVRO LEITOR OS VALORES ENCONTRADOS NAS PESQUISAS E ARMAZENADOS NAS VARIAVEIS
+              # INSERE NA TABELA LIVRO LEITOR OS VALORES ENCONTRADOS NAS PESQUISAS E ARMAZENADOS NAS VARIAVEIS
 
-    #ESSE TRECHO VERIFICA SE O ISBN E O NOME JA ESTAO NA TABELA LIVRO LEITOR
-    $result = mysql_query("SELECT * FROM tb_livro_leitor
-      WHERE tb_livro_cd_isbn_10_livro = '".$isbn10."' 
-      AND 
-      tb_leitor_cd_leitor = '".$_SESSION["nome"]."' 
-      ");
-    $result = mysql_num_rows($result); 
-    if($result >= 1){ #VERIFICA SE TEM 1 OU MAIS LINHAS NA TABELA LIVRO LEITOR
-    echo "Livro já selecionado";
+              #ESSE TRECHO VERIFICA SE O ISBN E O NOME JA ESTAO NA TABELA LIVRO LEITOR
+              $result = mysql_query("SELECT * FROM tb_livro_leitor
+                WHERE tb_livro_cd_isbn_10_livro = '".$isbn10."' 
+                AND 
+                tb_leitor_cd_leitor = '".$_SESSION["nome"]."' 
+                ");
+              $result = mysql_num_rows($result); 
+              if($result >= 1){ #VERIFICA SE TEM 1 OU MAIS LINHAS NA TABELA LIVRO LEITOR
+              echo "Livro já selecionado";
 
-    } else { # DÁ INSERT NA TABELA LIVRO LEITOR
-    if(isset($cdleitor,$isbn10,$isbn13)){
-      $vSQL = "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'JA LI')";
-    }
+              } else { # DÁ INSERT NA TABELA LIVRO LEITOR
+                  if(isset($cdleitor,$isbn10,$isbn13)){
+                    $vSQL = "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$cdleitor."', '".$isbn10."', '".$isbn13."', 'JA LI')";
+                    $_POST = null;
+                    echo '<script>window.location="jaliCAD.php";</script>';
+                  }
 
-    # FAZ A QUERY DA VARIAVEL ACIMA
-      $result = mysql_query($vSQL);
-              if ($result) {
-          echo "Seu cadastro foi realizado com sucesso";
-        }
-    }
-    
-      # VARIÁVEIS DA TB_LIVRO_LEITOR
-      # ds_status_leitura, ds_status_livro
-      # tb_livro_cd_isbn_10_livro,  tb_livro_cd_isbn_13_livro
-      # tb_leitor_cd_leitor, tb_leitor_cd_leitor_ID
+                # FAZ A QUERY DA VARIAVEL ACIMA
+                $result = mysql_query($vSQL);
+                        if ($result) {
+                    echo "<script>alert('Seu cadastro foi realizado com sucesso');</script>";
+                  }
+
+
+
+              }
+            }
+                # VARIÁVEIS DA TB_LIVRO_LEITOR
+                # ds_status_leitura, ds_status_livro
+                # tb_livro_cd_isbn_10_livro,  tb_livro_cd_isbn_13_livro
+                # tb_leitor_cd_leitor, tb_leitor_cd_leitor_ID
 
               ?>
             <div ng-if="bt_lido_success===true" class="btn btn-success btn-block ng-scope"><i class="fa fa-check"></i></div>
@@ -250,7 +233,7 @@
                 </div>
         </div>
         <div class="row subfooter clearfix" style="margin-right: 0px;">
-                                <ul>
+                <ul>
                         <li><a title="Livros" href='/livro/lista/'>Livros</a></li>
                         <li><a title="Autores" href='/autor/recentes/'>Autores</a></li>
                         <li><a title="Editoras" href='/editoras/'>Editoras</a></li>
