@@ -17,7 +17,21 @@
   //echo "sql: " . $sql;
   $connect = mysql_query($sql,$conn);
   $consulta = mysql_fetch_array($connect);
-  
+
+  $query = mysql_query(
+          "SELECT cd_leitor
+          FROM tb_leitor
+          WHERE nm_leitor = '".$_SESSION["nome"]."'
+          ");
+  $leitor = mysql_fetch_array($query);
+
+
+  if ($_GET['status'] == "lido"){
+    mysql_query( "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$leitor['cd_leitor']."', '".$consulta['cd_isbn_10_livro']."', '".$consulta['cd_isbn_13_livro']."', 'JA LI')");
+  }elseif ($_GET['status'] == "quero"){
+    mysql_query( "INSERT INTO `tb_livro_leitor` (`tb_leitor_cd_leitor`, `tb_livro_cd_isbn_10_livro`, `tb_livro_cd_isbn_13_livro`, `ds_status_leitura`)  VALUES ('".$leitor['cd_leitor']."', '".$consulta['cd_isbn_10_livro']."', '".$consulta['cd_isbn_13_livro']."', 'QUERO LER')");
+  }
+
 ?>
 <!DOCTYPE html>
 <html xmlns='//www.w3.org/1999/xhtml'>
@@ -148,23 +162,22 @@ googletag.cmd.push(function() { googletag.display('div-gpt-ad-1442757100761-0');
     </div>
 
     <hr />
+    <center>
+    <div class="dropdown btn-group btn-group-sm">
+     <button type="button" class="btn bt-adicionar-content-sm" data-toggle="dropdown" style="box-shadow:none !important;-webkit-box-shadow:none !important">Adicionar</button>
+     <!-- ngIf: bt_mais === true -->
 
-    <div class="star-big">
-                       <star-rating rate="0" type="livro"  id="621732" boxcounter="true" fixed="false" size="big"></star-rating>
-                   </div>
-
-
-    <div class="box-bt_adicionar-grande" >
-                       <button-shelf bt-size="normal" shelf-open="shelfOpen(621732)" edition-id="621732" user-book=""  user-logged-id="3794575" status="" check="no" ></button-shelf>
-                   </div>
-
-    
-           <div class="box-etiquetas-icones-grandes">
-                                     <button-label bt-size="big" edition-id="621732" user-book="0" user-logged-id="3794575"></button-label>
-                                 </div>         
-           <hr class="pg-livro-hr"/>
-           
-        <br clear='all' />
+     <ul class="dropdown-menu" style="text-align:left;">
+          <!-- ngIf: tipo !== 1 --><li data-ng-if="tipo !== 1" class="ng-scope"><a href="livro.php?status=lido&isbn=<?php printf($consulta['cd_isbn_10_livro']);  ?>" ng-click="addShelf(editionId, 1);" class="sk-cor-bg-hover-lido">Lido</a></li><!-- end ngIf: tipo !== 1 -->
+          <!-- ngIf: tipo !== 2 --><li data-ng-if="tipo !== 2" class="ng-scope"><a href="javascript:{}" ng-click="addShelf(editionId, 2);" class="sk-cor-bg-hover-lendo">Lendo</a></li><!-- end ngIf: tipo !== 2 -->
+          <!-- ngIf: tipo !== 3 --><li data-ng-if="tipo !== 3" class="ng-scope"><a href="livro.php?status=quero&isbn=<?php printf($consulta['cd_isbn_10_livro']);  ?>" ng-click="addShelf(editionId, 3);" class="sk-cor-bg-hover-queroler">Quero ler</a></li><!-- end ngIf: tipo !== 3 -->
+          <!-- ngIf: tipo !== 4 --><li data-ng-if="tipo !== 4" class="ng-scope"><a href="javascript:{}" ng-click="addShelf(editionId, 4);" class="sk-cor-bg-hover-relendo">Relendo</a></li><!-- end ngIf: tipo !== 4 -->
+          <!-- ngIf: tipo !== 5 --><li data-ng-if="tipo !== 5" class="ng-scope"><a href="javascript:{}" ng-click="addShelf(editionId, 5);" class="sk-cor-bg-hover-abandonei">Abandonei</a></li><!-- end ngIf: tipo !== 5 -->
+          <!-- ngIf: tipo !== 0 -->
+          <!-- ngIf: tipo !== 0 -->
+     </ul>
+</div> </center>
+  <br><br clear='all' />
     <ul id="ul-menu-vertical-badges" style="margin-top:-18px;">
         <li><a href="/livro/277440ED621732-o-lar-da-srta-peregrine-para-criancas-p">Sinopse</a><br clear="all"></li>
         <li><a href="/livro/edicoes/277440/edicao:621732">Edições</a><span class="badge badge-default">6</span><br clear="all"></li>
